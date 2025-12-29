@@ -10,156 +10,127 @@
     
     <style>
         :root {
-            --primary-blue: #00d2ff;
+            --primary-blue: #0088cc;
             --deep-blue: #003566;
-            --white: #ffffff;
-            --bg-dark: #030712;
+            --text-dark: #1f2937;
+            --bg-light: #f4f7f9; /* Mailiyeko white (off-white) */
+            --card-white: #ffffff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
-        body { background-color: var(--bg-dark); color: #e5e7eb; overflow-x: hidden; }
+        body { background-color: var(--bg-light); color: var(--text-dark); overflow-x: hidden; }
+
+        /* Floating Hearts Animation */
+        .floating-icons { position: fixed; width: 100%; height: 100%; pointer-events: none; z-index: 0; top: 0; left: 0; }
+        .heart { position: absolute; color: rgba(255, 77, 77, 0.2); animation: floatUp 8s linear infinite; }
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) scale(0.3); opacity: 0; }
+            50% { opacity: 0.6; transform: translateY(50vh) scale(1.2); }
+            100% { transform: translateY(-10vh) scale(0.5); opacity: 0; }
+        }
 
         /* Navigation */
         nav {
             position: fixed; width: 90%; left: 5%; top: 20px; padding: 15px 40px;
             display: flex; justify-content: space-between; align-items: center;
-            background: rgba(5, 10, 24, 0.8); backdrop-filter: blur(15px);
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; z-index: 1000;
+            background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(15px);
+            border: 1px solid rgba(0,0,0,0.05); border-radius: 50px; z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
-        .logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; color: var(--primary-blue); font-size: 1.4rem; }
-        
+        .logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; color: var(--deep-blue); font-size: 1.4rem; }
         nav ul { display: flex; list-style: none; gap: 20px; }
-        nav ul li a { text-decoration: none; color: #9ca3af; font-size: 0.85rem; transition: 0.3s; }
+        nav ul li a { text-decoration: none; color: #64748b; font-size: 0.85rem; font-weight: 600; transition: 0.3s; }
         nav ul li a:hover { color: var(--primary-blue); }
 
-        /* Mobile Menu Toggle */
-        .menu-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
-        .menu-toggle span { width: 25px; height: 3px; background: var(--primary-blue); border-radius: 5px; }
+        section { padding: 140px 10% 80px; min-height: 100vh; position: relative; z-index: 1; }
 
-        section { padding: 140px 10% 80px; min-height: 100vh; }
+        /* Titles */
+        .section-title { font-size: 2.8rem; font-family: 'Space Grotesk', sans-serif; margin-bottom: 50px; text-align: center; color: var(--deep-blue); }
+        .section-title span { color: var(--primary-blue); }
 
-        /* Hero Section */
+        /* Hero */
         #home { display: flex; align-items: center; justify-content: space-between; gap: 50px; }
-        .hero-text h1 { font-family: 'Space Grotesk', sans-serif; font-size: 3.5rem; line-height: 1.1; margin-bottom: 10px; }
+        .hero-text h1 { font-family: 'Space Grotesk', sans-serif; font-size: 3.5rem; line-height: 1.1; margin-bottom: 10px; color: var(--deep-blue); }
         .hero-text span { color: var(--primary-blue); }
         .typewriter-container { font-size: 1.6rem; font-weight: 500; color: var(--primary-blue); margin-bottom: 20px; min-height: 40px; }
-        #typewriter { color: var(--white); }
+        #typewriter { color: var(--text-dark); }
         #typewriter-cursor { color: var(--primary-blue); animation: blink 0.7s infinite; font-weight: 700; }
         @keyframes blink { 50% { opacity: 0; } }
-
-        .photo-frame {
-            width: 320px; height: 420px; border-radius: 30px; overflow: hidden;
-            border: 5px solid var(--primary-blue); box-shadow: 0 0 30px rgba(0,210,255,0.3);
-            animation: float 6s ease-in-out infinite;
-        }
+        .photo-frame { width: 320px; height: 420px; border-radius: 30px; overflow: hidden; border: 5px solid white; box-shadow: 0 20px 40px rgba(0,0,0,0.1); animation: float 6s ease-in-out infinite; }
         .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
 
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
-            .menu-toggle { display: flex; }
-            nav ul {
-                display: none; flex-direction: column; position: absolute;
-                top: 75px; left: 0; width: 100%; background: rgba(5, 10, 24, 0.98);
-                padding: 30px; text-align: center; border-radius: 20px;
-                border: 1px solid rgba(255,255,255,0.1);
-            }
-            nav ul.show { display: flex; }
-            nav { width: 95%; left: 2.5%; padding: 15px 25px; }
-            #home { flex-direction: column-reverse; text-align: center; padding-top: 100px; }
-            .hero-text h1 { font-size: 2.5rem; }
-            .photo-frame { width: 250px; height: 320px; margin: 0 auto; }
-            .contact-box { grid-template-columns: 1fr; }
-            .map-right { height: 300px; }
-        }
-
-        /* Skills & Projects */
-        .section-title { font-size: 2.8rem; font-family: 'Space Grotesk', sans-serif; margin-bottom: 50px; text-align: center; }
-        .section-title span { color: var(--primary-blue); }
-        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; }
-        .skill-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 30px 15px; border-radius: 20px; text-align: center; transition: 0.4s; cursor: pointer; }
-        .skill-card:hover { border-color: var(--primary-blue); transform: scale(1.05); }
+        /* Cards & Grids */
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
+        .skill-card, .card { background: var(--card-white); border: 1px solid rgba(0,0,0,0.05); padding: 25px; border-radius: 20px; text-align: center; transition: 0.4s; box-shadow: 0 5px 15px rgba(0,0,0,0.02); cursor: pointer; }
+        .skill-card:hover, .card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); border-color: var(--primary-blue); }
         .skill-card i { font-size: 2.5rem; color: var(--primary-blue); margin-bottom: 15px; }
-
-        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-        .card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 15px; transition: 0.3s; cursor: pointer; }
-        .card-img-container { width: 100%; height: 200px; overflow: hidden; border-radius: 15px; margin-bottom: 15px; }
+        .card-img-container { width: 100%; height: 180px; overflow: hidden; border-radius: 15px; margin-bottom: 15px; }
         .card-img-container img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Contact Section */
-        .contact-box { display: grid; grid-template-columns: 1fr 1.2fr; background: var(--white); border-radius: 30px; overflow: hidden; margin-top: 30px; min-height: 450px; }
-        .contact-left { background: var(--deep-blue); color: var(--white); padding: 50px; display: flex; flex-direction: column; justify-content: center; }
-        .info-item { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
-        .social-links { display: flex; gap: 15px; margin-top: 20px; }
-        .social-icon { width: 45px; height: 45px; border-radius: 50%; background: rgba(255,255,255,0.1); color: white; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: 0.3s; }
+        /* Contact Box */
+        .contact-box { display: grid; grid-template-columns: 1fr 1fr; background: var(--card-white); border-radius: 30px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.08); }
+        .contact-left { background: var(--deep-blue); color: white; padding: 50px 40px; display: flex; flex-direction: column; justify-content: center; }
+        .info-item { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; font-size: 1.1rem; }
+        .social-links { display: flex; gap: 12px; margin: 25px 0; }
+        .social-icon { width: 45px; height: 45px; border-radius: 10px; background: rgba(255,255,255,0.1); color: white; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: 0.3s; font-size: 1.3rem; }
         .social-icon:hover { background: var(--primary-blue); transform: translateY(-5px); }
-        .cv-btn { margin-top: 30px; display: inline-flex; align-items: center; gap: 10px; padding: 12px 25px; background: var(--primary-blue); color: var(--deep-blue); text-decoration: none; border-radius: 10px; font-weight: 700; transition: 0.3s; width: fit-content; }
-        .map-right { width: 100%; height: 100%; min-height: 400px; }
+        .cv-btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 25px; background: var(--primary-blue); color: white; text-decoration: none; border-radius: 12px; font-weight: 700; transition: 0.3s; width: fit-content; }
+        .cv-btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(0, 136, 204, 0.4); }
 
-        /* Lightbox & Modals */
-        .lightbox { display: none; position: fixed; z-index: 4000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); justify-content: center; align-items: center; }
-        .lightbox.active { display: flex; }
-        .lightbox img { max-width: 90%; max-height: 85%; border-radius: 10px; border: 2px solid var(--primary-blue); }
-        
-        .modal { display: none; position: fixed; z-index: 3000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); justify-content: center; align-items: center; }
-        .modal-content { background: var(--deep-blue); padding: 40px; border-radius: 25px; max-width: 500px; width: 90%; position: relative; border: 1px solid var(--primary-blue); }
-        .close-modal { position: absolute; top: 15px; right: 20px; color: white; font-size: 25px; cursor: pointer; }
-        
-        footer { text-align: center; padding: 40px 20px; border-top: 1px solid rgba(255,255,255,0.05); }
+        @media (max-width: 768px) {
+            #home { flex-direction: column-reverse; text-align: center; }
+            .contact-box { grid-template-columns: 1fr; }
+            nav ul { display: none; }
+        }
+
+        footer { text-align: center; padding: 40px; color: #64748b; border-top: 1px solid rgba(0,0,0,0.05); }
+
+        /* Lightbox & Modal (White Background) */
+        .modal { display: none; position: fixed; z-index: 3000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(5px); justify-content: center; align-items: center; }
+        .modal-content { background: white; padding: 40px; border-radius: 25px; max-width: 500px; width: 90%; position: relative; color: var(--text-dark); }
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 25px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div class="lightbox" id="imageLightbox" onclick="closeLightbox()">
-        <img src="" id="lightboxImg">
-    </div>
-
-    <div class="modal" id="skillModal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()">×</span>
-            <h3 id="modalTitle" style="color:var(--primary-blue); margin-bottom:15px; font-family:'Space Grotesk';"></h3>
-            <ul id="modalList" style="list-style:none; line-height:2.2;"></ul>
-        </div>
-    </div>
+    <div class="floating-icons" id="heart-container"></div>
 
     <nav>
         <div class="logo">SAROJ.C</div>
-        <div class="menu-toggle" id="mobile-toggle" onclick="toggleMenu()">
-            <span></span><span></span><span></span>
-        </div>
-        <ul id="navLinks">
-            <li><a href="#home" onclick="closeMenu()">Home</a></li>
-            <li><a href="#skills" onclick="closeMenu()">Skills</a></li>
-            <li><a href="#projects" onclick="closeMenu()">Projects</a></li>
-            <li><a href="#certificates" onclick="closeMenu()">Certificates</a></li>
-            <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#certificates">Certificates</a></li>
+            <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
 
     <section id="home">
         <div class="hero-text">
-            <h5 style="color: var(--primary-blue); letter-spacing: 2px;">GEOMATICS ENGINEER</h5>
+            <h5 style="color: var(--primary-blue); letter-spacing: 2px; font-weight: 700;">GEOMATICS ENGINEER</h5>
             <h1>I am <br><span>Saroj Chaudhary</span></h1>
             <div class="typewriter-container">I am a <span id="typewriter"></span><span id="typewriter-cursor">|</span></div>
-            <p class="hero-desc">Dedicated Geomatics Engineer specializing in GIS, Remote Sensing, and modern surveying. I turn spatial data into digital reality. I am also a CEO of MapNiti Pvt. Ltd.</p>
+            <p style="color: #64748b;">Dedicated Geomatics Engineer specializing in GIS, Remote Sensing, and modern surveying. I turn spatial data into digital reality. I am also a CEO of MapNiti Pvt. Ltd.</p>
         </div>
         <div class="hero-image">
             <div class="photo-frame">
-                <img src="https://github.com/Sarojchaudhary815/my-profile/blob/main/image/Saroj.jpg?raw=true" alt="Saroj">
+                <img src="https://github.com/Sarojchaudhary815/my-profile/blob/main/Saroj.jpg?raw=true" alt="Saroj">
             </div>
         </div>
     </section>
 
     <section id="skills">
         <h2 class="section-title">My <span>Skills</span></h2>
-        <div class="skills-grid">
-            <div class="skill-card" onclick="openSkill('GIS Analysis', ['Spatial Modeling', 'Thematic Mapping', 'Network Analysis', 'Digital Terrain Analysis'])">
+        <div class="grid-container">
+            <div class="skill-card" onclick="openSkill('GIS Analysis', ['Spatial Modeling', 'Thematic Mapping', 'Network Analysis'])">
                 <i class="fas fa-map-marked-alt"></i><h3>GIS Analysis</h3>
             </div>
-            <div class="skill-card" onclick="openSkill('Remote Sensing', ['Image Classification', 'NDVI & Vegetation Index', 'Satellite Image Processing', 'Change Detection'])">
+            <div class="skill-card" onclick="openSkill('Remote Sensing', ['Image Classification', 'NDVI Analysis', 'Satellite Processing'])">
                 <i class="fas fa-satellite"></i><h3>Remote Sensing</h3>
             </div>
-            <div class="skill-card" onclick="openSkill('Web GIS', ['Leaflet & Mapbox', 'Web Mapping Services (WMS)', 'GeoServer Configuration'])">
+            <div class="skill-card" onclick="openSkill('Web GIS', ['Leaflet & Mapbox', 'Web Mapping', 'GeoServer'])">
                 <i class="fas fa-globe"></i><h3>Web GIS</h3>
             </div>
             <div class="skill-card" onclick="openSkill('Surveying', ['Drone Survey', 'DGPS Survey', 'Topographic Survey'])">
@@ -170,40 +141,32 @@
 
     <section id="projects">
         <h2 class="section-title">Latest <span>Projects</span></h2>
-        <div class="card-grid">
-            <div class="card" onclick="openLightbox(this)">
-                <div class="card-img-container">
-                    <img src="https://github.com/Sarojchaudhary815/my-profile/blob/main/image/Healthcare%20coverage%20in%20dhangadhi.png?raw=true" alt="Project 1">
-                </div>
+        <div class="grid-container">
+            <div class="card">
+                <div class="card-img-container"><img src="https://github.com/Sarojchaudhary815/my-profile/blob/main/image/Healthcare%20coverage%20in%20dhangadhi.png?raw=true"></div>
                 <h3>Healthcare Mapping</h3>
-                <p>GIS analysis for Dhangadhi medical coverage.</p>
+                <p>GIS analysis for Dhangadhi coverage.</p>
             </div>
-            <div class="card" onclick="openLightbox(this)">
-                <div class="card-img-container">
-                    <img src="https://via.placeholder.com/400x250/003566/ffffff?text=Urban+Growth+Analysis" alt="Project 2">
-                </div>
+            <div class="card">
+                <div class="card-img-container"><img src="https://via.placeholder.com/400x250"></div>
                 <h3>Urban Growth</h3>
-                <p>Smart city spatial data modeling.</p>
+                <p>Smart city spatial modeling.</p>
             </div>
         </div>
     </section>
 
     <section id="certificates">
         <h2 class="section-title">My <span>Certificates</span></h2>
-        <div class="card-grid">
-            <div class="card" onclick="openLightbox(this)">
-                <div class="card-img-container">
-                    <img src="https://github.com/Sarojchaudhary815/my-profile/blob/main/image/saroj%20chaudhary.png?raw=true" alt="Certificate 1">
-                </div>
+        <div class="grid-container">
+            <div class="card">
+                <div class="card-img-container"><img src="https://github.com/Sarojchaudhary815/my-profile/blob/main/image/saroj%20chaudhary.png?raw=true"></div>
                 <h3>Web GIS Training</h3>
-                <p>Geomatics Engineering Students Association of Nepal</p>
+                <p>GESAN Nepal</p>
             </div>
-            <div class="card" onclick="openLightbox(this)">
-                <div class="card-img-container">
-                    <img src="https://github.com/Sarojchaudhary815/my-profile/blob/main/image/freepik-saroj-20240703030650suPE.png?raw=true" alt="Certificate 2">
-                </div>
-                <h3>Map Making Competition</h3>
-                <p>Geomatics Engineering Students Association of Nepal</p>
+            <div class="card">
+                <div class="card-img-container"><img src="https://github.com/Sarojchaudhary815/my-profile/blob/main/image/freepik-saroj-20240703030650suPE.png?raw=true"></div>
+                <h3>Map Making</h3>
+                <p>Competition Award</p>
             </div>
         </div>
     </section>
@@ -212,18 +175,23 @@
         <h2 class="section-title">Get In <span>Touch</span></h2>
         <div class="contact-box">
             <div class="contact-left">
-                <div class="info-item"><i class="fas fa-envelope"></i> <span>chys5569@gmail.com</span></div>
-                <div class="info-item"><i class="fas fa-phone-alt"></i> <span>+977 9824646029</span></div>
+                <h3 style="font-family: 'Space Grotesk'; margin-bottom: 25px;">Contact Information</h3>
+                <div class="info-item"><i class="fas fa-envelope" style="color:var(--primary-blue)"></i> <span>chys5569@gmail.com</span></div>
+                <div class="info-item"><i class="fas fa-phone-alt" style="color:var(--primary-blue)"></i> <span>+977 9824646029</span></div>
+                
                 <div class="social-links">
-                    <a href="https://www.facebook.com/share/1C4ubVKPwo/" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.instagram.com/iamsarozch.2003" class="social-icon"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.linkedin.com/in/saroj-chaudhary2003" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.facebook.com/share/1C4ubVKPwo/" class="social-icon" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.linkedin.com/in/saroj-chaudhary2003" class="social-icon" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.instagram.com/iamsarozch.2003" class="social-icon" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://github.com/Sarojchaudhary815" class="social-icon" target="_blank"><i class="fab fa-github"></i></a>
                 </div>
-                <a href="https://github.com/Sarojchaudhary815/my-profile/blob/main/image/My%20CV.pdf?raw=true" class="cv-btn"><i class="fas fa-file-download"></i> DOWNLOAD CV</a>
+
+                <a href="https://github.com/Sarojchaudhary815/my-profile/blob/main/image/My%20CV.pdf?raw=true" download class="cv-btn">
+                    <i class="fas fa-file-download"></i> DOWNLOAD MY CV
+                </a>
             </div>
             <div class="map-right">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3511.0!2d80.91319267877442!3d28.587592856442587!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2snp!4v1710000000000" 
-                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14050.298818564175!2d80.57501726057999!3d28.687481358327477!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39a19326778f921f%3A0x868b8159f8a32a22!2sDhangadhi!5e0!3m2!1sen!2snp!4v1715428000000!5m2!1sen!2snp" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
             </div>
         </div>
     </section>
@@ -232,12 +200,30 @@
         <p>© 2025 Saroj Chaudhary. All Rights Reserved.</p>
     </footer>
 
+    <div class="modal" id="skillModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">×</span>
+            <h3 id="modalTitle" style="color:var(--deep-blue); margin-bottom:15px; font-family:'Space Grotesk';"></h3>
+            <ul id="modalList" style="list-style:none; line-height:2.2;"></ul>
+        </div>
+    </div>
+
     <script>
-        // Typewriter Effect
+        function createHeart() {
+            const container = document.getElementById('heart-container');
+            const heart = document.createElement('div');
+            heart.classList.add('heart'); heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            heart.style.animationDuration = Math.random() * 3 + 5 + 's';
+            container.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 8000);
+        }
+        setInterval(createHeart, 600);
+
         const textElement = document.getElementById('typewriter');
         const phrases = ["Geomatics Engineer", "Spatial Analyst", "Web GIS Developer", "Entrepreneur"];
         let i = 0, j = 0, isDeleting = false;
-
         function type() {
             let current = phrases[i];
             textElement.textContent = isDeleting ? current.substring(0, j--) : current.substring(0, j++);
@@ -245,36 +231,16 @@
             else if (isDeleting && j < 0) { isDeleting = false; i = (i + 1) % phrases.length; setTimeout(type, 500); }
             else { setTimeout(type, isDeleting ? 70 : 120); }
         }
+        type();
 
-        // Navbar Controls
-        function toggleMenu() {
-            document.getElementById('navLinks').classList.toggle('show');
-        }
-        function closeMenu() {
-            if (window.innerWidth <= 768) {
-                document.getElementById('navLinks').classList.remove('show');
-            }
-        }
-
-        // Skill Modal
         function openSkill(title, points) {
             document.getElementById('modalTitle').innerText = title;
-            const list = document.getElementById('modalList');
-            list.innerHTML = points.map(p => `<li><i class="fas fa-check-circle" style="color:var(--primary-blue); font-size:0.9rem;"></i> ${p}</li>`).join('');
+            document.getElementById('modalList').innerHTML = points.map(p => `<li>• ${p}</li>`).join('');
             document.getElementById('skillModal').style.display = "flex";
         }
         function closeModal() { document.getElementById('skillModal').style.display = "none"; }
-
-        // Lightbox
-        function openLightbox(card) {
-            document.getElementById('lightboxImg').src = card.querySelector('img').src;
-            document.getElementById('imageLightbox').classList.add('active');
-        }
-        function closeLightbox() { document.getElementById('imageLightbox').classList.remove('active'); }
-
-        // Initialize
-        type();
-        ScrollReveal().reveal('.card, .skill-card', { delay: 100, distance: '20px', interval: 50 });
+        
+        ScrollReveal().reveal('.skill-card, .card, .contact-box', { delay: 100, distance: '30px', interval: 50 });
     </script>
 </body>
 </html>
