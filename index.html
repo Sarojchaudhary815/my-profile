@@ -13,14 +13,13 @@
             --primary-blue: #0088cc;
             --deep-blue: #003566;
             --text-dark: #1f2937;
-            --bg-light: #f4f7f9; /* Mailiyeko white (off-white) */
+            --bg-light: #f4f7f9; 
             --card-white: #ffffff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
         body { background-color: var(--bg-light); color: var(--text-dark); overflow-x: hidden; }
 
-        /* Floating Hearts Animation */
         .floating-icons { position: fixed; width: 100%; height: 100%; pointer-events: none; z-index: 0; top: 0; left: 0; }
         .heart { position: absolute; color: rgba(255, 77, 77, 0.2); animation: floatUp 8s linear infinite; }
         @keyframes floatUp {
@@ -29,7 +28,6 @@
             100% { transform: translateY(-10vh) scale(0.5); opacity: 0; }
         }
 
-        /* Navigation */
         nav {
             position: fixed; width: 90%; left: 5%; top: 20px; padding: 15px 40px;
             display: flex; justify-content: space-between; align-items: center;
@@ -44,11 +42,9 @@
 
         section { padding: 140px 10% 80px; min-height: 100vh; position: relative; z-index: 1; }
 
-        /* Titles */
         .section-title { font-size: 2.8rem; font-family: 'Space Grotesk', sans-serif; margin-bottom: 50px; text-align: center; color: var(--deep-blue); }
         .section-title span { color: var(--primary-blue); }
 
-        /* Hero */
         #home { display: flex; align-items: center; justify-content: space-between; gap: 50px; }
         .hero-text h1 { font-family: 'Space Grotesk', sans-serif; font-size: 3.5rem; line-height: 1.1; margin-bottom: 10px; color: var(--deep-blue); }
         .hero-text span { color: var(--primary-blue); }
@@ -60,7 +56,6 @@
         .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
 
-        /* Cards & Grids */
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
         .skill-card, .card { background: var(--card-white); border: 1px solid rgba(0,0,0,0.05); padding: 25px; border-radius: 20px; text-align: center; transition: 0.4s; box-shadow: 0 5px 15px rgba(0,0,0,0.02); cursor: pointer; }
         .skill-card:hover, .card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); border-color: var(--primary-blue); }
@@ -68,7 +63,6 @@
         .card-img-container { width: 100%; height: 180px; overflow: hidden; border-radius: 15px; margin-bottom: 15px; }
         .card-img-container img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Contact Box */
         .contact-box { display: grid; grid-template-columns: 1fr 1fr; background: var(--card-white); border-radius: 30px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.08); }
         .contact-left { background: var(--deep-blue); color: white; padding: 50px 40px; display: flex; flex-direction: column; justify-content: center; }
         .info-item { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; font-size: 1.1rem; }
@@ -86,10 +80,13 @@
 
         footer { text-align: center; padding: 40px; color: #64748b; border-top: 1px solid rgba(0,0,0,0.05); }
 
-        /* Lightbox & Modal (White Background) */
-        .modal { display: none; position: fixed; z-index: 3000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(5px); justify-content: center; align-items: center; }
+        .modal { display: none; position: fixed; z-index: 3000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); justify-content: center; align-items: center; }
         .modal-content { background: white; padding: 40px; border-radius: 25px; max-width: 500px; width: 90%; position: relative; color: var(--text-dark); }
         .close-modal { position: absolute; top: 15px; right: 20px; font-size: 25px; cursor: pointer; }
+
+        /* Lightbox for Images */
+        #imageLightbox { display: none; position: fixed; z-index: 4000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; cursor: zoom-out; }
+        #imageLightbox img { max-width: 90%; max-height: 85vh; border-radius: 10px; border: 5px solid white; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
     </style>
 </head>
 <body>
@@ -116,7 +113,7 @@
         </div>
         <div class="hero-image">
             <div class="photo-frame">
-                <img src="https://github.com/Sarojchaudhary815/my-profile/blob/main/Saroj.jpg?raw=true" alt="Saroj">
+                <img src="https://github.com/Sarojchaudhary815/my-profile/blob/main/Saroj.jpg?raw=true" alt="Saroj" onclick="zoomImage(this.src)">
             </div>
         </div>
     </section>
@@ -142,12 +139,12 @@
     <section id="projects">
         <h2 class="section-title">Latest <span>Projects</span></h2>
         <div class="grid-container">
-            <div class="card">
+            <div class="card" onclick="zoomImage('https://github.com/Sarojchaudhary815/my-profile/blob/main/Healthcare%20coverage%20in%20dhangadhi.png?raw=true')">
                 <div class="card-img-container"><img src="https://github.com/Sarojchaudhary815/my-profile/blob/main/Healthcare%20coverage%20in%20dhangadhi.png?raw=true"></div>
                 <h3>Healthcare Mapping</h3>
                 <p>GIS analysis for Dhangadhi coverage.</p>
             </div>
-            <div class="card">
+            <div class="card" onclick="zoomImage('https://via.placeholder.com/800x600')">
                 <div class="card-img-container"><img src="https://via.placeholder.com/400x250"></div>
                 <h3>Urban Growth</h3>
                 <p>Smart city spatial modeling.</p>
@@ -158,17 +155,17 @@
     <section id="certificates">
         <h2 class="section-title">My <span>Certificates</span></h2>
         <div class="grid-container">
-            <div class="card">
+            <div class="card" onclick="zoomImage('saroj chaudhary.png')">
                 <div class="card-img-container"><img src="saroj chaudhary.png"></div>
                 <h3>Web GIS Training</h3>
                 <p>GESAN Nepal</p>
             </div>
-            <div class="card">
+            <div class="card" onclick="zoomImage('freepik-saroj-20240703030650suPE.png')">
                 <div class="card-img-container"><img src="freepik-saroj-20240703030650suPE.png"></div>
                 <h3>Map Making</h3>
                 <p>Competition Award</p>
             </div>
-            <div class="card">
+            <div class="card" onclick="zoomImage('Saroj Chaudhary_page-0001.jpg')">
                 <div class="card-img-container"><img src="Saroj Chaudhary_page-0001.jpg"></div>
                 <h3>Mapathon </h3>
                 <p>Trainning Certificate</p>
@@ -202,8 +199,12 @@
     </section>
 
     <footer>
-        <p>© 2025 Saroj Chaudhary. All Rights Reserved.</p>
+        <p>© <span id="current-year"></span> Saroj Chaudhary. All Rights Reserved.</p>
     </footer>
+
+    <div id="imageLightbox" onclick="this.style.display='none'">
+        <img id="zoomImg" src="">
+    </div>
 
     <div class="modal" id="skillModal">
         <div class="modal-content">
@@ -214,6 +215,14 @@
     </div>
 
     <script>
+        // Zoom Function
+        function zoomImage(src) {
+            const lightbox = document.getElementById('imageLightbox');
+            const img = document.getElementById('zoomImg');
+            img.src = src;
+            lightbox.style.display = 'flex';
+        }
+
         function createHeart() {
             const container = document.getElementById('heart-container');
             const heart = document.createElement('div');
@@ -246,14 +255,8 @@
         function closeModal() { document.getElementById('skillModal').style.display = "none"; }
         
         ScrollReveal().reveal('.skill-card, .card, .contact-box', { delay: 100, distance: '30px', interval: 50 });
+
+        document.getElementById('current-year').textContent = new Date().getFullYear();
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
