@@ -4,6 +4,36 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Saroj Chaudhary | Geomatics Student</title>
+
+<!-- Open Graph / Social Sharing -->
+<meta property="og:title" content="Saroj Chaudhary | Geomatics Student">
+<meta property="og:description" content="Dedicated Geomatics Engineer specializing in GIS, Remote Sensing, and modern surveying.">
+<meta property="og:image" content="https://github.com/Sarojchaudhary815/my-profile/blob/main/Saroj.jpg?raw=true">
+<meta property="og:url" content="https://chaudharysaroj.com.np">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Saroj Chaudhary | Geomatics Student">
+<meta name="twitter:description" content="Dedicated Geomatics Engineer specializing in GIS, Remote Sensing, and modern surveying.">
+<meta name="twitter:image" content="https://github.com/Sarojchaudhary815/my-profile/blob/main/Saroj.jpg?raw=true">
+
+<!-- Schema.org structured data for Google Knowledge Panel -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Saroj Chaudhary",
+  "jobTitle": "Geomatics Student",
+  "image": "https://github.com/Sarojchaudhary815/my-profile/blob/main/Saroj.jpg?raw=true",
+  "url": "https://chaudharysaroj.com.np",
+  "sameAs": [
+    "https://www.linkedin.com/in/saroj-chaudhary2003",
+    "https://github.com/Sarojchaudhary815",
+    "https://www.facebook.com/share/1C4ubVKPwo/",
+    "https://www.instagram.com/iamsarozch.2003"
+  ]
+}
+</script>
+
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -287,11 +317,21 @@ section{padding:150px 9% 90px; position:relative; z-index:1;}
     #home{flex-direction:column-reverse; text-align:center; gap:44px;}
     .hero-desc, .hero-text{max-width:100%;}
     .hero-actions, .hero-stats{justify-content:center;}
+    .hero-stats{gap:22px; flex-wrap:wrap;}
+    .stat b{font-size:1.35rem;}
+    .stat span{font-size:0.7rem;}
     .friends-cta{margin-left:auto; margin-right:auto;}
     .contact-box{grid-template-columns:1fr;}
     .map-right{min-height:260px;}
     nav ul{display:none;}
     .coord-tag{left:8px;}
+}
+
+@media (max-width:420px){
+    .hero-stats{gap:14px;}
+    .stat{flex:0 0 calc(50% - 7px); min-width:110px;}
+    .stat b{font-size:1.2rem;}
+    .stat span{font-size:0.64rem;}
 }
 
 footer{text-align:center; padding:44px; color:var(--ink-soft); border-top:1px solid var(--line); font-size:0.85rem; position:relative; z-index:1;}
@@ -307,6 +347,27 @@ footer .mono{color:var(--primary-blue);}
 
 #imageLightbox{display:none; position:fixed; z-index:4000; inset:0; background:rgba(0,20,40,0.92); justify-content:center; align-items:center; cursor:zoom-out;}
 #imageLightbox img{max-width:90%; max-height:85vh; border-radius:10px; border:4px solid #fff; box-shadow:0 0 40px rgba(0,0,0,0.5);}
+.lightbox-nav{
+    position:absolute; top:50%; transform:translateY(-50%); z-index:4001;
+    width:48px; height:48px; border-radius:50%; background:rgba(255,255,255,0.12);
+    color:#fff; display:flex; align-items:center; justify-content:center;
+    font-size:1.1rem; cursor:pointer; transition:0.2s; backdrop-filter:blur(4px);
+}
+.lightbox-nav:hover{background:rgba(255,255,255,0.28);}
+.lightbox-prev{left:24px;}
+.lightbox-next{right:24px;}
+.lightbox-close{
+    position:absolute; top:24px; right:24px; z-index:4001;
+    width:40px; height:40px; border-radius:50%; background:rgba(255,255,255,0.12);
+    color:#fff; display:flex; align-items:center; justify-content:center;
+    font-size:1rem; cursor:pointer; transition:0.2s; backdrop-filter:blur(4px);
+}
+.lightbox-close:hover{background:rgba(255,255,255,0.28);}
+.lightbox-counter{
+    position:absolute; bottom:24px; left:50%; transform:translateX(-50%); z-index:4001;
+    color:#fff; font-family:'JetBrains Mono',monospace; font-size:0.82rem;
+    background:rgba(255,255,255,0.12); padding:6px 14px; border-radius:20px; backdrop-filter:blur(4px);
+}
 
 .geomatics-student {
     color: var(--primary-blue);
@@ -496,6 +557,20 @@ details[open] .expand-icon {
 .tf-group input[type=file]{font-size:0.8rem;}
 .tf-preview{display:flex; gap:8px; margin-top:8px; flex-wrap:wrap;}
 .tf-preview img{width:56px; height:56px; object-fit:cover; border-radius:6px; border:1px solid var(--line);}
+.tf-img-row{display:flex; gap:8px; align-items:center; margin-bottom:8px;}
+.tf-img-row input[type=text]{flex:1; margin-bottom:0;}
+.tf-img-remove{
+    flex-shrink:0; width:34px; height:34px; border-radius:8px; border:1px solid var(--line);
+    background:#fff; color:#c0392b; cursor:pointer; font-size:0.9rem; transition:0.2s;
+    display:flex; align-items:center; justify-content:center;
+}
+.tf-img-remove:hover{background:#c0392b; color:#fff; border-color:#c0392b;}
+.tf-add-img-btn{
+    display:inline-flex; align-items:center; gap:8px; padding:9px 16px; margin-top:2px;
+    background:transparent; border:1px dashed var(--line); border-radius:8px;
+    color:var(--primary-blue); font-weight:600; font-size:0.82rem; cursor:pointer; transition:0.2s;
+}
+.tf-add-img-btn:hover{border-color:var(--primary-blue); border-style:solid; background:rgba(0,136,204,0.06);}
 .tf-save-btn{
     width:100%; padding:13px; border-radius:8px; border:none; background:var(--primary-blue); color:#fff;
     font-weight:600; font-size:0.9rem; cursor:pointer; transition:0.3s;
@@ -639,6 +714,12 @@ details[open] .expand-icon {
     transform: scale(0.98);
 }
 
+.login-btn:disabled{
+    opacity:0.7;
+    cursor:default;
+    transform:none;
+}
+
 .login-footer {
     text-align: center;
     margin-top: 18px;
@@ -743,9 +824,9 @@ details[open] .expand-icon {
             <a href="CV Saroj Chaudhary.pdf" download class="btn-outline"><i class="fas fa-file-arrow-down"></i> Download CV</a>
         </div>
         <div class="hero-stats">
-            <div class="stat"><b>3+</b><span>On-going Projects</span></div>
-            <div class="stat"><b>4</b><span>Completed Projects</span></div>
-            <div class="stat"><b>2</b><span>International Client/Projects</span></div>
+            <div class="stat"><b data-count-target="3" data-suffix="+">0</b><span>On-going Projects</span></div>
+            <div class="stat"><b data-count-target="4">0</b><span>Completed Projects</span></div>
+            <div class="stat"><b data-count-target="2">0</b><span>International Client/Projects</span></div>
         </div>
         <a href="friends.html" class="friends-cta">
             <i class="fas fa-user-group"></i>
@@ -1090,8 +1171,12 @@ details[open] .expand-icon {
     <p>© <span id="current-year"></span> Saroj Chaudhary <span class="mono">Geomatics Student</span>. All Rights Reserved.</p>
 </footer>
 
-<div id="imageLightbox" onclick="this.style.display='none'">
+<div id="imageLightbox" onclick="if(event.target===this)this.style.display='none'">
+    <span class="lightbox-nav lightbox-prev" onclick="event.stopPropagation(); lightboxStep(-1)"><i class="fas fa-chevron-left"></i></span>
     <img id="zoomImg" src="">
+    <span class="lightbox-nav lightbox-next" onclick="event.stopPropagation(); lightboxStep(1)"><i class="fas fa-chevron-right"></i></span>
+    <span class="lightbox-close" onclick="event.stopPropagation(); document.getElementById('imageLightbox').style.display='none'"><i class="fas fa-xmark"></i></span>
+    <span class="lightbox-counter" id="lightboxCounter"></span>
 </div>
 
 <div class="modal" id="skillModal">
@@ -1131,7 +1216,7 @@ details[open] .expand-icon {
         </div>
 
         <!-- Login Button -->
-        <button class="login-btn" onclick="checkLogin()">
+        <button class="login-btn" id="tourLoginBtn" onclick="checkLogin()">
             <i class="fas fa-arrow-right-to-bracket"></i> Login
         </button>
 
@@ -1162,10 +1247,8 @@ details[open] .expand-icon {
         </div>
         <div class="tf-group">
             <label>Image URLs (optional — paste links from Imgur, GitHub, etc.)</label>
-            <input type="text" id="tfImgUrl1" placeholder="https://i.imgur.com/example1.jpg" style="margin-bottom:8px;">
-            <input type="text" id="tfImgUrl2" placeholder="https://i.imgur.com/example2.jpg" style="margin-bottom:8px;">
-            <input type="text" id="tfImgUrl3" placeholder="https://i.imgur.com/example3.jpg">
-            <input type="text" id="tfImgUrl3" placeholder="https://i.imgur.com/example3.jpg">
+            <div class="tf-img-list" id="tfImgUrlsContainer"></div>
+            <button type="button" class="tf-add-img-btn" id="tfAddImgBtn" onclick="addImgRow()"><i class="fas fa-plus"></i> Add another image</button>
             <div class="tf-preview" id="tfPreview"></div>
         </div>
         <button class="tf-save-btn" id="tfSaveBtn" onclick="saveTourPoint()">Save</button>
@@ -1175,10 +1258,38 @@ details[open] .expand-icon {
 
 
 <script>
-function zoomImage(src){
-    document.getElementById('zoomImg').src = src;
+let lightboxImages = [];
+let lightboxIndex = 0;
+function zoomImage(src, imagesJson){
+    lightboxImages = imagesJson ? JSON.parse(imagesJson) : [src];
+    lightboxIndex = Math.max(0, lightboxImages.indexOf(src));
+    renderLightboxImage();
     document.getElementById('imageLightbox').style.display = 'flex';
 }
+function renderLightboxImage(){
+    document.getElementById('zoomImg').src = lightboxImages[lightboxIndex];
+    const counter = document.getElementById('lightboxCounter');
+    const nav = document.querySelectorAll('.lightbox-nav');
+    if(lightboxImages.length > 1){
+        counter.textContent = `${lightboxIndex + 1} / ${lightboxImages.length}`;
+        counter.style.display = 'block';
+        nav.forEach(n => n.style.display = 'flex');
+    } else {
+        counter.style.display = 'none';
+        nav.forEach(n => n.style.display = 'none');
+    }
+}
+function lightboxStep(dir){
+    if(lightboxImages.length < 2) return;
+    lightboxIndex = (lightboxIndex + dir + lightboxImages.length) % lightboxImages.length;
+    renderLightboxImage();
+}
+document.addEventListener('keydown', (e) => {
+    if(document.getElementById('imageLightbox').style.display !== 'flex') return;
+    if(e.key === 'ArrowLeft') lightboxStep(-1);
+    else if(e.key === 'ArrowRight') lightboxStep(1);
+    else if(e.key === 'Escape') document.getElementById('imageLightbox').style.display = 'none';
+});
 
 const textElement = document.getElementById('typewriter');
 const phrases = ["Geomatics Engineer", "Spatial Analyst", "Web GIS Developer", "Entrepreneur"];
@@ -1242,6 +1353,30 @@ function zoomCurrentSlide(sliderEl){
     zoomImage(imgs[index].src);
 }
 window.addEventListener('load', initMiniSliders);
+
+/* ---------- animated hero stat counters (0 -> target) ---------- */
+function animateStatCounter(el){
+    const target = parseInt(el.dataset.countTarget, 10);
+    const suffix = el.dataset.suffix || '';
+    const duration = 1400;
+    const startTime = performance.now();
+    function step(now){
+        const progress = Math.min((now - startTime) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3); /* ease-out cubic */
+        const value = Math.round(eased * target);
+        el.textContent = value + suffix;
+        if(progress < 1){
+            requestAnimationFrame(step);
+        } else {
+            el.textContent = target + suffix;
+        }
+    }
+    requestAnimationFrame(step);
+}
+function initStatCounters(){
+    document.querySelectorAll('.hero-stats b[data-count-target]').forEach(animateStatCounter);
+}
+window.addEventListener('load', initStatCounters);
 
 /* ---------- continuous slow "train" carousel: loops endlessly, very slowly ---------- */
 function initCarousel(trackId, prevId, nextId, dotsId){
@@ -1367,6 +1502,7 @@ function togglePassword() {
 <!-- Firebase (compat SDK — simple script-tag usage, no build step needed) -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 
 <script>
 /* =========================================================================
@@ -1383,14 +1519,16 @@ const firebaseConfig = {
     measurementId: "G-R1QJ66SLL7"
 };
 
-const EDITOR_EMAIL = "chys5569@gmail.com";
-const EDITOR_PASSWORD = "Saroj@2288";
+/* NOTE: the old hardcoded EDITOR_EMAIL / EDITOR_PASSWORD constants have been
+   removed. Login now goes through Firebase Authentication (see checkLogin
+   below), so no password of any kind lives in this file anymore. */
 
-let travelApp, travelDB;
+let travelApp, travelDB, travelAuth;
 let firebaseReady = false;
 try {
     travelApp = firebase.initializeApp(firebaseConfig);
     travelDB = firebase.firestore();
+    travelAuth = firebase.auth();
     firebaseReady = true;
 } catch (e) {
     console.warn("Firebase not configured yet:", e.message);
@@ -1438,7 +1576,7 @@ function renderPointOnMap(id, data){
     // Use the custom Font Awesome pin icon
     const marker = L.marker([data.lat, data.lng], { icon: customPinIcon }).addTo(travelMap);
     const imgsHtml = (data.images && data.images.length)
-        ? `<div class="travel-popup-imgs">${data.images.map(u => `<img src="${u}" onclick="zoomImage('${u}')">`).join('')}</div>`
+        ? `<div class="travel-popup-imgs">${data.images.map(u => `<img src="${u}" onclick='zoomImage(${JSON.stringify(u)}, ${JSON.stringify(JSON.stringify(data.images))})'>`).join('')}</div>`
         : '';
     const delBtnHtml = isEditMode('delete')
         ? `<button class="travel-popup-del" onclick="deleteTourPoint('${id}')">Delete this point</button>` : '';
@@ -1459,7 +1597,7 @@ function loadTourPoints(){
     }, err => console.warn('tourPoints listener error:', err.message));
 }
 
-/* ---------------- Auth ---------------- */
+/* ---------------- Auth (Firebase Authentication — no hardcoded password) ---------------- */
 let currentEditor = null;
 
 function openTourLogin(){
@@ -1471,24 +1609,53 @@ function openTourLogin(){
 }
 function closeTourLogin(){ document.getElementById('tourLoginModal').style.display = 'none'; }
 
-function checkLogin(){
+async function checkLogin(){
     const email = document.getElementById('loginEmail').value.trim();
     const password = document.getElementById('loginPassword').value;
     const errEl = document.getElementById('tourLoginError');
-    if(email.toLowerCase() === EDITOR_EMAIL.toLowerCase() && password === EDITOR_PASSWORD){
-        currentEditor = { email: EDITOR_EMAIL, displayName: 'Saroj' };
-        sessionStorage.setItem('travelEditorLoggedIn', '1');
-        errEl.style.display = 'none';
+    const btn = document.getElementById('tourLoginBtn');
+    errEl.style.display = 'none';
+
+    if(!firebaseReady || !travelAuth){
+        errEl.querySelector ? (errEl.textContent = 'Login service unavailable right now.') : null;
+        errEl.style.display = 'block';
+        return;
+    }
+    if(!email || !password){
+        errEl.textContent = 'Please enter both email and password.';
+        errEl.style.display = 'block';
+        return;
+    }
+
+    btn.disabled = true;
+    const originalHtml = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+
+    try {
+        const cred = await travelAuth.signInWithEmailAndPassword(email, password);
+        currentEditor = { email: cred.user.email, displayName: 'Saroj' };
         closeTourLogin();
         showTourControlsForEditor();
-    } else {
+    } catch (err) {
+        errEl.innerHTML = '<i class="fas fa-exclamation-circle"></i> Incorrect email or password.';
         errEl.style.display = 'block';
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = originalHtml;
     }
 }
 
-if(sessionStorage.getItem('travelEditorLoggedIn') === '1'){
-    currentEditor = { email: EDITOR_EMAIL, displayName: 'Saroj' };
-    window.addEventListener('load', showTourControlsForEditor);
+/* Keep the login state in sync with Firebase's own session (no more
+   hand-rolled sessionStorage flag holding "is logged in"). */
+if(firebaseReady && travelAuth){
+    travelAuth.onAuthStateChanged(user => {
+        if(user){
+            currentEditor = { email: user.email, displayName: 'Saroj' };
+            showTourControlsForEditor();
+        } else {
+            currentEditor = null;
+        }
+    });
 }
 
 function showTourControlsForEditor(){
@@ -1501,7 +1668,7 @@ function showTourControlsForEditor(){
     `;
 }
 function signOutEditor(){
-    sessionStorage.removeItem('travelEditorLoggedIn');
+    if(firebaseReady && travelAuth){ travelAuth.signOut(); }
     currentEditor = null;
     addModeActive = false; deleteModeActive = false;
     updateModeBanner();
@@ -1554,9 +1721,7 @@ function onMapClickForAdd(e){
         `Location: ${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}`;
     document.getElementById('tfTitle').value = '';
     document.getElementById('tfDesc').value = '';
-    document.getElementById('tfImgUrl1').value = '';
-    document.getElementById('tfImgUrl2').value = '';
-    document.getElementById('tfImgUrl3').value = '';
+    resetImgUrlRows();
     document.getElementById('tfPreview').innerHTML = '';
     document.getElementById('tfError').style.display = 'none';
     document.getElementById('tourFormModal').style.display = 'flex';
@@ -1567,8 +1732,8 @@ function updateImagePreview(){
     const preview = document.getElementById('tfPreview');
     if(!preview) return;
     preview.innerHTML = '';
-    ['tfImgUrl1','tfImgUrl2','tfImgUrl3'].forEach(id => {
-        const val = document.getElementById(id).value.trim();
+    document.querySelectorAll('.tfImgUrl').forEach(input => {
+        const val = input.value.trim();
         if(val){
             const img = document.createElement('img');
             img.src = val;
@@ -1578,16 +1743,47 @@ function updateImagePreview(){
     });
 }
 document.addEventListener('input', (e) => {
-    if(e.target && ['tfImgUrl1','tfImgUrl2','tfImgUrl3'].includes(e.target.id)){
+    if(e.target && e.target.classList && e.target.classList.contains('tfImgUrl')){
         updateImagePreview();
     }
 });
 
+function makeImgRow(){
+    const row = document.createElement('div');
+    row.className = 'tf-img-row';
+    row.innerHTML = `
+        <input type="text" class="tfImgUrl" placeholder="https://i.imgur.com/example.jpg">
+        <button type="button" class="tf-img-remove" onclick="removeImgRow(this)" title="Remove"><i class="fas fa-xmark"></i></button>
+    `;
+    return row;
+}
+function addImgRow(){
+    const container = document.getElementById('tfImgUrlsContainer');
+    const row = makeImgRow();
+    container.appendChild(row);
+    row.querySelector('.tfImgUrl').focus();
+}
+function removeImgRow(btn){
+    const container = document.getElementById('tfImgUrlsContainer');
+    const row = btn.closest('.tf-img-row');
+    if(container.children.length > 1){
+        row.remove();
+    } else {
+        row.querySelector('.tfImgUrl').value = '';
+    }
+    updateImagePreview();
+}
+function resetImgUrlRows(){
+    const container = document.getElementById('tfImgUrlsContainer');
+    container.innerHTML = '';
+    container.appendChild(makeImgRow());
+}
+
 async function saveTourPoint(){
     const title = document.getElementById('tfTitle').value.trim();
     const desc = document.getElementById('tfDesc').value.trim();
-    const imageUrls = ['tfImgUrl1','tfImgUrl2','tfImgUrl3']
-        .map(id => document.getElementById(id).value.trim())
+    const imageUrls = Array.from(document.querySelectorAll('.tfImgUrl'))
+        .map(input => input.value.trim())
         .filter(url => url.length > 0);
     const errEl = document.getElementById('tfError');
     const btn = document.getElementById('tfSaveBtn');
@@ -1595,6 +1791,7 @@ async function saveTourPoint(){
 
     if(!title || !pendingLatLng){ errEl.textContent = 'Title is required.'; errEl.style.display = 'block'; return; }
     if(!firebaseReady){ errEl.textContent = 'Backend not configured yet.'; errEl.style.display = 'block'; return; }
+    if(!currentEditor){ errEl.textContent = 'You must be logged in to add a point.'; errEl.style.display = 'block'; return; }
 
     btn.disabled = true; btn.textContent = 'Saving...';
     try {
