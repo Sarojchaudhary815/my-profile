@@ -8,13 +8,13 @@
 <!-- Open Graph / Social Sharing -->
 <meta property="og:title" content="Saroj Chaudhary | Geomatics Student">
 <meta property="og:description" content="Dedicated Geomatics Engineer specializing in GIS, Remote Sensing, and modern surveying.">
-<meta property="og:image" content="Saroj Chaudhary.jpg">
+<meta property="og:image" content="https://github.com/Sarojchaudhary815/my-profile/blob/main/Saroj.jpg?raw=true">
 <meta property="og:url" content="https://chaudharysaroj.com.np">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Saroj Chaudhary | Geomatics Student">
 <meta name="twitter:description" content="Dedicated Geomatics Engineer specializing in GIS, Remote Sensing, and modern surveying.">
-<meta name="twitter:image" content="Saroj Chaudhary.jpg">
+<meta name="twitter:image" content="https://github.com/Sarojchaudhary815/my-profile/blob/main/Saroj.jpg?raw=true">
 
 <!-- Schema.org structured data for Google Knowledge Panel -->
 <script type="application/ld+json">
@@ -552,7 +552,7 @@ details[open] .expand-icon {
 /* ================= TRAVELLED MAP SECTION ================= */
 #travelled .section-head{margin-bottom:36px;}
 .travel-map-wrap{
-    position:relative; width:100%; height:360px; border-radius:var(--radius); overflow:hidden;
+    position:relative; width:100%; height:420px; border-radius:var(--radius); overflow:hidden;
     border:1px solid var(--line); box-shadow:0 20px 50px rgba(0,53,102,0.1);
 }
 #travelMap{width:100%; height:100%; background:#e8eef2;}
@@ -651,7 +651,13 @@ details[open] .expand-icon {
 }
 
 /* Add-point form modal */
-#tourFormModal .modal-content, #tourLoginModal .modal-content{max-width:420px;}
+#tourLoginModal .modal-content{max-width:420px;}
+#tourFormModal .modal-content{
+    max-width:420px; max-height:88vh; overflow-y:auto;
+    scrollbar-width:thin; scrollbar-color:var(--line) transparent;
+}
+#tourFormModal .modal-content::-webkit-scrollbar{width:6px;}
+#tourFormModal .modal-content::-webkit-scrollbar-thumb{background:var(--line); border-radius:10px;}
 .tf-group{margin-bottom:16px;}
 .tf-group label{display:block; font-size:0.8rem; font-weight:600; color:var(--deep-blue); margin-bottom:6px;}
 .tf-group input[type=text], .tf-group input[type=email], .tf-group input[type=date], .tf-group select, .tf-group textarea{
@@ -861,7 +867,7 @@ details[open] .expand-icon {
 }
 
 @media (max-width:768px){
-    .travel-map-wrap{height:300px;}
+    .travel-map-wrap{height:340px;}
     .travel-search-box{width:200px;}
     .travel-tour-controls{max-width:calc(100% - 32px);}
     .travel-btn{padding:9px 12px; font-size:0.72rem;}
@@ -951,7 +957,7 @@ details[open] .expand-icon {
     </div>
     <div class="hero-image">
         <div class="photo-frame">
-            <img src="Saroj Chaudhary.jpg" alt="Saroj Chaudhary" onclick="zoomImage(this.src)">
+            <img src="https://github.com/Sarojchaudhary815/my-profile/blob/main/Saroj.jpg?raw=true" alt="Saroj Chaudhary" onclick="zoomImage(this.src)">
         </div>
     </div>
 </section>
@@ -1253,9 +1259,9 @@ details[open] .expand-icon {
         <!-- bottom-left category filter legend -->
         <div class="travel-legend" id="travelLegend">
             <button class="legend-chip active" data-cat="trekking" onclick="toggleCategoryFilter('trekking')"><span class="dot" style="background:#0088cc"></span> Trekking <span class="legend-count" data-count-for="trekking">(0)</span></button>
-            <button class="legend-chip active" data-cat="survey" onclick="toggleCategoryFilter('survey')"><span class="dot" style="background:#e0930f"></span> Survey <span class="legend-count" data-count-for="survey">(0)</span></button>
             <button class="legend-chip active" data-cat="vacation" onclick="toggleCategoryFilter('vacation')"><span class="dot" style="background:#2e9e6b"></span> Vacation <span class="legend-count" data-count-for="vacation">(0)</span></button>
-            <button class="legend-chip active" data-cat="personal" onclick="toggleCategoryFilter('personal')"><span class="dot" style="background:#8e5fd1"></span> Personal <span class="legend-count" data-count-for="personal">(0)</span></button>
+            <button class="legend-chip active" data-cat="survey" onclick="toggleCategoryFilter('survey')"><span class="dot" style="background:#e0930f"></span> Field Work <span class="legend-count" data-count-for="survey">(0)</span></button>
+            <button class="legend-chip active" data-cat="personal" onclick="toggleCategoryFilter('personal')"><span class="dot" style="background:#8e5fd1"></span> Local Visits <span class="legend-count" data-count-for="personal">(0)</span></button>
             <button class="legend-chip route-chip" id="routeToggleBtn" onclick="toggleRouteLine()"><i class="fas fa-route"></i> Show Route</button>
         </div>
     </div>
@@ -1354,7 +1360,7 @@ details[open] .expand-icon {
 
     <div class="message-form-wrap">
         <h3>Send a Message</h3>
-        <p class="section-sub" style="margin-bottom:24px;">Have a project or a collaboration idea? I’d love to hear about it. Send me a message and let's get started!</p>
+        <p class="section-sub" style="margin-bottom:24px;">Fill this in and I'll get your message directly — no email app needed.</p>
         <div class="message-form-grid">
             <div class="tf-group">
                 <label>Your Name</label>
@@ -1462,9 +1468,9 @@ details[open] .expand-icon {
                 <label>Category</label>
                 <select id="tfCategory">
                     <option value="trekking">Trekking</option>
-                    <option value="survey">Survey / Field Work</option>
                     <option value="vacation">Vacation</option>
-                    <option value="personal">Personal</option>
+                    <option value="survey">Field Work</option>
+                    <option value="personal">Local Visits</option>
                 </select>
             </div>
         </div>
@@ -1779,6 +1785,12 @@ const categoryColors = {
     vacation: '#2e9e6b',
     personal: '#8e5fd1'
 };
+const categoryLabels = {
+    trekking: 'Trekking',
+    survey: 'Field Work',
+    vacation: 'Vacation',
+    personal: 'Local Visits'
+};
 const categoryIconCache = {};
 function getCategoryIcon(category){
     const color = categoryColors[category] || categoryColors.trekking;
@@ -1842,7 +1854,7 @@ function renderPointOnMap(id, data){
     const editBtnHtml = (currentEditor && !isEditMode('delete'))
         ? `<button class="travel-popup-edit" onclick="openEditTourForm('${id}')"><i class="fas fa-pen"></i> Edit this point</button>` : '';
     const dateHtml = data.visitDate ? `<p class="travel-popup-date"><i class="fas fa-calendar-day"></i> ${escapeHtml(data.visitDate)}</p>` : '';
-    const catLabel = category.charAt(0).toUpperCase() + category.slice(1);
+    const catLabel = categoryLabels[category] || (category.charAt(0).toUpperCase() + category.slice(1));
     marker.bindPopup(`<div class="travel-popup"><span class="travel-popup-cat" style="background:${categoryColors[category]}">${catLabel}</span><h4>${escapeHtml(data.title||'')}</h4>${dateHtml}<p>${escapeHtml(data.desc||'')}</p>${imgsHtml}${editBtnHtml}${delBtnHtml}</div>`);
     marker.on('click', () => {
         if(deleteModeActive){ deleteTourPoint(id); }
