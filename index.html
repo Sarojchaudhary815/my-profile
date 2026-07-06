@@ -42,6 +42,7 @@
 <style>
 :root{
     --deep-blue:#003566;
+    --brand-solid:#003566;
     --primary-blue:#0088cc;
     --sky:#4fb3e8;
     --amber:#e0930f;
@@ -52,6 +53,20 @@
     --line:rgba(0,53,102,0.12);
     --radius:18px;
 }
+html[data-theme="dark"]{
+    --deep-blue:#eaf4ff;
+    --primary-blue:#4fb3e8;
+    --sky:#0088cc;
+    --amber:#f0a830;
+    --bg:#0b1622;
+    --paper:#101f30;
+    --ink:#e8eef4;
+    --ink-soft:#93a4b8;
+    --line:rgba(255,255,255,0.09);
+}
+html[data-theme="dark"] nav{background:rgba(16,31,48,0.85);}
+html[data-theme="dark"] .photo-frame{border-color:#101f30;}
+body, nav, .card, .contact-box, .modal-content{transition:background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease;}
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Sora',sans-serif;scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--ink);overflow-x:hidden;}
 .mono{font-family:'JetBrains Mono',monospace;}
@@ -74,6 +89,12 @@ nav{
     box-shadow:0 12px 30px rgba(0,53,102,0.06);
 }
 .logo{font-family:'Sora',sans-serif; font-weight:700; color:var(--deep-blue); font-size:1.25rem; display:flex; align-items:center; gap:10px; text-decoration:none;}
+.theme-toggle{
+    width:38px; height:38px; border-radius:10px; border:1px solid var(--line);
+    background:var(--bg); color:var(--deep-blue); cursor:pointer; font-size:0.95rem;
+    display:flex; align-items:center; justify-content:center; transition:0.3s; margin-left:8px;
+}
+.theme-toggle:hover{border-color:var(--primary-blue); color:var(--primary-blue);}
 nav ul{display:flex; list-style:none; gap:28px; align-items:center;}
 nav ul li a{
     text-decoration:none; color:var(--ink-soft); font-size:0.78rem; font-weight:600;
@@ -126,7 +147,7 @@ section{padding:150px 9% 90px; position:relative; z-index:1;}
 .hero-actions{display:flex; gap:14px; flex-wrap:wrap;}
 .btn-primary{
     display:inline-flex; align-items:center; gap:10px; padding:14px 26px;
-    background:var(--deep-blue); color:#fff; text-decoration:none; border-radius:10px;
+    background:var(--brand-solid); color:#fff; text-decoration:none; border-radius:10px;
     font-weight:600; font-size:0.9rem; transition:0.3s; border:1px solid var(--deep-blue);
 }
 .btn-primary:hover{background:var(--primary-blue); border-color:var(--primary-blue); transform:translateY(-2px); box-shadow:0 10px 24px rgba(0,136,204,0.28);}
@@ -281,13 +302,73 @@ section{padding:150px 9% 90px; position:relative; z-index:1;}
 /* ---------- certificates ---------- */
 .cert-card{cursor:pointer;}
 
+/* ---------- testimonials ---------- */
+.testimonial-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:26px;}
+.testimonial-card{
+    background:var(--paper); border:1px solid var(--line); border-radius:var(--radius);
+    padding:32px 28px; box-shadow:0 16px 40px rgba(0,53,102,0.06); position:relative;
+}
+.quote-icon{color:var(--primary-blue); opacity:0.25; font-size:1.6rem; margin-bottom:14px; display:block;}
+.testimonial-text{color:var(--ink-soft); font-size:0.95rem; line-height:1.75; margin-bottom:22px; min-height:96px;}
+.testimonial-author{display:flex; align-items:center; gap:12px;}
+.testimonial-author img{width:42px; height:42px; border-radius:50%; object-fit:cover;}
+.testimonial-author h4{font-size:0.9rem; color:var(--deep-blue); margin-bottom:2px;}
+.testimonial-author span{font-size:0.76rem; color:var(--ink-soft);}
+.testimonial-note{text-align:center; margin-top:26px; font-size:0.78rem; color:var(--ink-soft); font-style:italic;}
+.testimonial-empty{grid-column:1/-1; text-align:center; color:var(--ink-soft); font-size:0.9rem; padding:30px;}
+.testimonial-toprow{display:flex; justify-content:flex-end; margin-bottom:14px;}
+.view-all-link{
+    background:none; border:none; color:var(--primary-blue); font-weight:700; font-size:0.85rem;
+    cursor:pointer; display:flex; align-items:center; gap:8px; transition:0.2s;
+}
+.view-all-link:hover{gap:12px; color:var(--brand-solid);}
+.give-feedback-trigger-wrap{display:flex; justify-content:center; margin-top:30px;}
+.give-feedback-trigger{
+    background:var(--paper); border:1px solid var(--line); color:var(--deep-blue); font-weight:700;
+    font-size:0.85rem; padding:12px 26px; border-radius:30px; cursor:pointer; display:flex; align-items:center;
+    gap:8px; box-shadow:0 10px 26px rgba(0,53,102,0.08); transition:0.2s;
+}
+.give-feedback-trigger:hover{background:var(--primary-blue); color:#fff; transform:translateY(-2px);}
+#feedbackFormModal .modal-content, #viewAllFeedbackModal .modal-content{max-width:460px;}
+.testimonial-form-wrap{
+    margin-top:36px; background:var(--paper); border:1px solid var(--line); border-radius:var(--radius);
+    padding:40px; box-shadow:0 16px 40px rgba(0,53,102,0.06);
+}
+.testimonial-form-wrap h3{color:var(--deep-blue); font-size:1.3rem; margin-bottom:8px;}
+.testimonial-admin-panel{
+    margin-top:26px; background:rgba(224,147,15,0.08); border:1px dashed var(--amber); border-radius:var(--radius);
+    padding:28px 32px;
+}
+.testimonial-admin-panel h3{color:var(--amber); font-size:1rem; margin-bottom:16px; display:flex; align-items:center; gap:8px;}
+.pending-testimonial-card{
+    background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:18px 20px; margin-bottom:14px;
+}
+.pending-testimonial-card p{color:var(--ink-soft); font-size:0.86rem; line-height:1.6; margin-bottom:10px;}
+.pending-testimonial-card h4{color:var(--deep-blue); font-size:0.92rem; margin-bottom:2px;}
+.pending-testimonial-card span{color:var(--ink-soft); font-size:0.76rem;}
+.pending-actions{display:flex; gap:10px; margin-top:12px;}
+.pending-actions button{
+    flex:1; padding:8px 12px; border-radius:8px; border:none; font-size:0.78rem; font-weight:700; cursor:pointer;
+}
+.pending-approve{background:#2e9e6b; color:#fff;}
+.pending-reject{background:#c0392b; color:#fff;}
+@media(max-width:700px){ .testimonial-form-wrap, .testimonial-admin-panel{padding:26px 20px;} }
+@media(max-width:900px){ .testimonial-grid{grid-template-columns:1fr;} }
+
 /* ---------- contact ---------- */
 .contact-box{
     display:grid; grid-template-columns:1fr 1fr; background:var(--paper); border-radius:24px;
     overflow:hidden; box-shadow:0 24px 60px rgba(0,53,102,0.1); border:1px solid var(--line);
 }
+.message-form-wrap{
+    margin-top:36px; background:var(--paper); border:1px solid var(--line); border-radius:var(--radius);
+    padding:40px; box-shadow:0 16px 40px rgba(0,53,102,0.06);
+}
+.message-form-wrap h3{color:var(--deep-blue); font-size:1.3rem; margin-bottom:8px;}
+.message-form-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+@media(max-width:700px){ .message-form-grid{grid-template-columns:1fr;} }
 .contact-left{
-    background:var(--deep-blue); color:#fff; padding:56px 46px; display:flex; flex-direction:column;
+    background:var(--brand-solid); color:#fff; padding:56px 46px; display:flex; flex-direction:column;
     justify-content:center; position:relative; overflow:hidden;
 }
 .contact-left::before{
@@ -504,7 +585,7 @@ details[open] .expand-icon {
 }
 .travel-btn{
     display:inline-flex; align-items:center; gap:8px; padding:11px 18px; border-radius:10px; border:none;
-    background:var(--deep-blue); color:#fff; font-weight:600; font-size:0.8rem; cursor:pointer; transition:0.3s;
+    background:var(--brand-solid); color:#fff; font-weight:600; font-size:0.8rem; cursor:pointer; transition:0.3s;
     box-shadow:0 8px 20px rgba(0,53,102,0.18);
 }
 .travel-btn:hover{background:var(--primary-blue); transform:translateY(-2px);}
@@ -522,6 +603,21 @@ details[open] .expand-icon {
 .travel-userchip img{width:26px; height:26px; border-radius:50%;}
 
 /* bottom-right base layer switcher */
+.travel-legend{
+    position:absolute; left:14px; bottom:14px; z-index:900; display:flex; flex-wrap:wrap; gap:6px;
+    max-width:70%;
+}
+.legend-chip{
+    display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:20px;
+    border:1px solid var(--line); background:rgba(255,255,255,0.92); color:var(--ink-soft);
+    font-size:0.72rem; font-weight:600; cursor:pointer; transition:0.2s; backdrop-filter:blur(6px);
+}
+.legend-chip .dot{width:8px; height:8px; border-radius:50%; display:inline-block;}
+.legend-count{opacity:0.7; font-weight:700;}
+.legend-chip:not(.active){opacity:0.45;}
+.legend-chip.route-chip.active{background:var(--brand-solid); color:#fff; border-color:var(--brand-solid);}
+@media(max-width:700px){ .travel-legend{max-width:95%;} .legend-chip{font-size:0.66rem; padding:5px 9px;} }
+
 .travel-baselayer{
     position:absolute; bottom:20px; right:16px; z-index:900; background:rgba(255,255,255,0.96);
     border:1px solid var(--line); border-radius:12px; padding:8px; box-shadow:0 8px 24px rgba(0,53,102,0.14);
@@ -536,7 +632,12 @@ details[open] .expand-icon {
 
 /* leaflet popup content for a travel point */
 .travel-popup{width:220px; font-family:'Sora',sans-serif;}
-.travel-popup h4{color:var(--deep-blue); font-size:0.98rem; margin-bottom:6px;}
+.travel-popup-cat{
+    display:inline-block; font-size:0.65rem; font-weight:700; color:#fff; padding:2px 9px;
+    border-radius:10px; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.03em;
+}
+.travel-popup h4{color:var(--deep-blue); font-size:0.98rem; margin-bottom:4px;}
+.travel-popup-date{color:var(--ink-soft); font-size:0.74rem; margin-bottom:6px; display:flex; align-items:center; gap:5px;}
 .travel-popup p{color:var(--ink-soft); font-size:0.82rem; line-height:1.5; margin-bottom:8px;}
 .travel-popup .travel-popup-imgs{display:flex; gap:5px; overflow-x:auto; margin-bottom:6px;}
 .travel-popup .travel-popup-imgs img{width:60px; height:60px; object-fit:cover; border-radius:6px; cursor:zoom-in; flex-shrink:0;}
@@ -544,14 +645,18 @@ details[open] .expand-icon {
     background:#c0392b; color:#fff; border:none; padding:6px 10px; border-radius:6px; font-size:0.72rem;
     cursor:pointer; width:100%; font-weight:600;
 }
+.travel-popup .travel-popup-edit{
+    background:var(--primary-blue); color:#fff; border:none; padding:6px 10px; border-radius:6px; font-size:0.72rem;
+    cursor:pointer; width:100%; font-weight:600; margin-bottom:6px;
+}
 
 /* Add-point form modal */
 #tourFormModal .modal-content, #tourLoginModal .modal-content{max-width:420px;}
 .tf-group{margin-bottom:16px;}
 .tf-group label{display:block; font-size:0.8rem; font-weight:600; color:var(--deep-blue); margin-bottom:6px;}
-.tf-group input[type=text], .tf-group textarea{
+.tf-group input[type=text], .tf-group input[type=email], .tf-group input[type=date], .tf-group select, .tf-group textarea{
     width:100%; padding:11px 14px; border-radius:8px; border:1px solid var(--line); font-size:0.88rem;
-    font-family:'Sora',sans-serif; resize:vertical; color:var(--ink);
+    font-family:'Sora',sans-serif; resize:vertical; color:var(--ink); background:var(--paper);
 }
 .tf-group textarea{min-height:80px;}
 .tf-group input[type=file]{font-size:0.8rem;}
@@ -575,7 +680,7 @@ details[open] .expand-icon {
     width:100%; padding:13px; border-radius:8px; border:none; background:var(--primary-blue); color:#fff;
     font-weight:600; font-size:0.9rem; cursor:pointer; transition:0.3s;
 }
-.tf-save-btn:hover{background:var(--deep-blue);}
+.tf-save-btn:hover{background:var(--brand-solid);}
 .tf-save-btn:disabled{opacity:0.6; cursor:default;}
 .tf-hint{font-size:0.78rem; color:var(--ink-soft); margin-bottom:14px; background:var(--bg); padding:10px 12px; border-radius:8px;}
 .tf-google-btn{
@@ -586,6 +691,7 @@ details[open] .expand-icon {
 .tf-google-btn:hover{border-color:var(--primary-blue); box-shadow:0 6px 16px rgba(0,53,102,0.1);}
 .tf-google-btn img{width:18px; height:18px;}
 .tf-error{color:#c0392b; font-size:0.8rem; margin-top:10px; display:none;}
+.tf-success{color:#2e9e6b; font-size:0.8rem; margin-top:10px; display:none; font-weight:600;}
 .tf-mode-banner{
     position:absolute; bottom:20px; left:16px; z-index:900; background:rgba(0,53,102,0.92); color:#fff;
     padding:10px 16px; border-radius:10px; font-size:0.8rem; font-weight:600; display:none; align-items:center; gap:8px;
@@ -608,7 +714,7 @@ details[open] .expand-icon {
 .login-header .login-icon {
     width: 64px;
     height: 64px;
-    background: linear-gradient(135deg, var(--primary-blue), var(--deep-blue));
+    background: linear-gradient(135deg, var(--primary-blue), var(--brand-solid));
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -692,7 +798,7 @@ details[open] .expand-icon {
     padding: 14px;
     border: none;
     border-radius: 12px;
-    background: linear-gradient(135deg, var(--primary-blue), var(--deep-blue));
+    background: linear-gradient(135deg, var(--primary-blue), var(--brand-solid));
     color: #fff;
     font-weight: 700;
     font-size: 0.95rem;
@@ -777,6 +883,14 @@ details[open] .expand-icon {
 }
 
 </style>
+<script>
+(function(){
+    try {
+        const saved = localStorage.getItem('theme');
+        if(saved === 'dark') document.documentElement.setAttribute('data-theme','dark');
+    } catch(e){}
+})();
+</script>
 </head>
 <body>
 
@@ -810,6 +924,7 @@ details[open] .expand-icon {
         <li><a href="#certificates">Certificates</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#contact">Contact</a></li>
+        <li><button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" aria-label="Toggle dark mode"><i class="fas fa-moon" id="themeToggleIcon"></i></button></li>
     </ul>
 </nav>
 
@@ -886,8 +1001,8 @@ details[open] .expand-icon {
             <div class="card">
                 <div class="card-img-container">
                     <div class="mini-slider" onclick="zoomCurrentSlide(this)">
-                        <img src="IMAS.png">
-                        <img src="https://github.com/Sarojchaudhary815/my-profile/blob/main/IMAS1.png?raw=true">
+                        <img src="IMAS.png" loading="lazy">
+                        <img src="https://github.com/Sarojchaudhary815/my-profile/blob/main/IMAS1.png?raw=true" loading="lazy">
                     </div>
                     <button class="mini-nav prev" onclick="event.stopPropagation(); slideMini(this.parentElement,-1)"><i class="fas fa-chevron-left"></i></button>
                     <button class="mini-nav next" onclick="event.stopPropagation(); slideMini(this.parentElement,1)"><i class="fas fa-chevron-right"></i></button>
@@ -902,7 +1017,7 @@ details[open] .expand-icon {
             <div class="card">
                 <div class="card-img-container">
                     <div class="mini-slider" onclick="zoomCurrentSlide(this)">
-                        <img src="Tarakeshwor Water Supply.png">
+                        <img src="Tarakeshwor Water Supply.png" loading="lazy">
                     </div>
                     <button class="mini-nav prev" onclick="event.stopPropagation(); slideMini(this.parentElement,-1)"><i class="fas fa-chevron-left"></i></button>
                     <button class="mini-nav next" onclick="event.stopPropagation(); slideMini(this.parentElement,1)"><i class="fas fa-chevron-right"></i></button>
@@ -917,8 +1032,8 @@ details[open] .expand-icon {
             <div class="card">
                 <div class="card-img-container">
                     <div class="mini-slider" onclick="zoomCurrentSlide(this)">
-                        <img src="Reality_Maps.png">
-                        <img src="Reality_Maps1.png">
+                        <img src="Reality_Maps.png" loading="lazy">
+                        <img src="Reality_Maps1.png" loading="lazy">
                     </div>
                     <button class="mini-nav prev" onclick="event.stopPropagation(); slideMini(this.parentElement,-1)"><i class="fas fa-chevron-left"></i></button>
                     <button class="mini-nav next" onclick="event.stopPropagation(); slideMini(this.parentElement,1)"><i class="fas fa-chevron-right"></i></button>
@@ -933,8 +1048,8 @@ details[open] .expand-icon {
             <div class="card">
                 <div class="card-img-container">
                     <div class="mini-slider" onclick="zoomCurrentSlide(this)">
-                        <img src="Annapurna Rural Municipality Pooling Booth Map.png">
-                        <img src="Annapurna Rural Municipality Pooling Booth Map1.png">
+                        <img src="Annapurna Rural Municipality Pooling Booth Map.png" loading="lazy">
+                        <img src="Annapurna Rural Municipality Pooling Booth Map1.png" loading="lazy">
                     </div>
                     <button class="mini-nav prev" onclick="event.stopPropagation(); slideMini(this.parentElement,-1)"><i class="fas fa-chevron-left"></i></button>
                     <button class="mini-nav next" onclick="event.stopPropagation(); slideMini(this.parentElement,1)"><i class="fas fa-chevron-right"></i></button>
@@ -949,7 +1064,7 @@ details[open] .expand-icon {
             <div class="card">
                 <div class="card-img-container">
                     <div class="mini-slider" onclick="zoomCurrentSlide(this)">
-                        <img src="Healthcare coverage in dhangadhi.png">
+                        <img src="Healthcare coverage in dhangadhi.png" loading="lazy">
                     </div>
                     <button class="mini-nav prev" onclick="event.stopPropagation(); slideMini(this.parentElement,-1)"><i class="fas fa-chevron-left"></i></button>
                     <button class="mini-nav next" onclick="event.stopPropagation(); slideMini(this.parentElement,1)"><i class="fas fa-chevron-right"></i></button>
@@ -977,7 +1092,7 @@ details[open] .expand-icon {
         <div class="carousel-track certs-track" id="certTrack">
             <div class="card">
                 <div class="card-img-container" onclick="zoomImage('https://github.com/Sarojchaudhary815/my-profile/blob/main/Certificate%20of%20Appreciation%20Saroj%20Chaudhary.jpg?raw=true')">
-                    <img src="https://github.com/Sarojchaudhary815/my-profile/blob/main/Certificate%20of%20Appreciation%20Saroj%20Chaudhary.jpg?raw=true">
+                    <img src="https://github.com/Sarojchaudhary815/my-profile/blob/main/Certificate%20of%20Appreciation%20Saroj%20Chaudhary.jpg?raw=true" loading="lazy">
                 </div>
                 <div class="card-body">
                     <h3>Mapathon Sainamaina Municipality</h3>
@@ -986,7 +1101,7 @@ details[open] .expand-icon {
             </div>
             <div class="card">
                 <div class="card-img-container" onclick="zoomImage('https://github.com/Sarojchaudhary815/my-profile/blob/main/freepik-saroj-20240703030650suPE.png?raw=true')">
-                    <img src="https://github.com/Sarojchaudhary815/my-profile/blob/main/freepik-saroj-20240703030650suPE.png?raw=true">
+                    <img src="https://github.com/Sarojchaudhary815/my-profile/blob/main/freepik-saroj-20240703030650suPE.png?raw=true" loading="lazy">
                 </div>
                 <div class="card-body">
                     <h3>Map Making Competetion (GESAN)</h3>
@@ -995,7 +1110,7 @@ details[open] .expand-icon {
             </div>
             <div class="card">
                 <div class="card-img-container" onclick="zoomImage('https://github.com/Sarojchaudhary815/my-profile/blob/main/saroj%20chaudhary.png?raw=true')">
-                    <img src="https://github.com/Sarojchaudhary815/my-profile/blob/main/saroj%20chaudhary.png?raw=true">
+                    <img src="https://github.com/Sarojchaudhary815/my-profile/blob/main/saroj%20chaudhary.png?raw=true" loading="lazy">
                 </div>
                 <div class="card-body">
                     <h3>Web GIS Training (GESAN)</h3>
@@ -1004,7 +1119,7 @@ details[open] .expand-icon {
             </div>
             <div class="card">
                 <div class="card-img-container" onclick="zoomImage('HOTmap Saroj Chaudhary.png')">
-                    <img src="HOTmap Saroj Chaudhary.png">
+                    <img src="HOTmap Saroj Chaudhary.png" loading="lazy">
                 </div>
                 <div class="card-body">
                     <h3>Open Mapping Training</h3>
@@ -1134,8 +1249,79 @@ details[open] .expand-icon {
             <button id="baseOSM" class="active" onclick="switchBaseLayer('osm')"><i class="fas fa-map"></i> OSM</button>
             <button id="baseHybrid" onclick="switchBaseLayer('hybrid')"><i class="fas fa-satellite"></i> Google Hybrid</button>
         </div>
+
+        <!-- bottom-left category filter legend -->
+        <div class="travel-legend" id="travelLegend">
+            <button class="legend-chip active" data-cat="trekking" onclick="toggleCategoryFilter('trekking')"><span class="dot" style="background:#0088cc"></span> Trekking <span class="legend-count" data-count-for="trekking">(0)</span></button>
+            <button class="legend-chip active" data-cat="survey" onclick="toggleCategoryFilter('survey')"><span class="dot" style="background:#e0930f"></span> Survey <span class="legend-count" data-count-for="survey">(0)</span></button>
+            <button class="legend-chip active" data-cat="vacation" onclick="toggleCategoryFilter('vacation')"><span class="dot" style="background:#2e9e6b"></span> Vacation <span class="legend-count" data-count-for="vacation">(0)</span></button>
+            <button class="legend-chip active" data-cat="personal" onclick="toggleCategoryFilter('personal')"><span class="dot" style="background:#8e5fd1"></span> Personal <span class="legend-count" data-count-for="personal">(0)</span></button>
+            <button class="legend-chip route-chip" id="routeToggleBtn" onclick="toggleRouteLine()"><i class="fas fa-route"></i> Show Route</button>
+        </div>
     </div>
 </section>
+
+
+<section id="testimonials">
+    <div class="section-head">
+        <h2 class="section-title">What People <span>Say</span></h2>
+        <p class="section-sub">Feedback from colleagues, clients, and collaborators I've worked with on GIS and mapping projects.</p>
+    </div>
+
+    <div class="testimonial-toprow">
+        <span></span>
+        <button class="view-all-link" id="viewAllFeedbackBtn" onclick="openViewAllFeedback()" style="display:none;">
+            View All Feedback <i class="fas fa-arrow-right"></i>
+        </button>
+    </div>
+
+    <div class="testimonial-grid" id="testimonialsGrid">
+        <p class="testimonial-empty">Loading feedback...</p>
+    </div>
+
+    <div class="give-feedback-trigger-wrap">
+        <button class="give-feedback-trigger" onclick="openFeedbackForm()"><i class="fas fa-comment-dots"></i> Give Feedback</button>
+    </div>
+
+    <div class="testimonial-admin-panel" id="testimonialsAdminPanel" style="display:none;">
+        <h3><i class="fas fa-user-shield"></i> Pending Feedback (only you can see this)</h3>
+        <div id="testimonialsAdminList"></div>
+    </div>
+</section>
+
+<!-- Give Feedback modal (small trigger opens this full form) -->
+<div class="modal" id="feedbackFormModal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeFeedbackForm()">&times;</span>
+        <h3>Share Your Feedback</h3>
+        <p class="section-sub" style="margin-bottom:20px;">Worked with me on a project? I'd love to hear about it. Submitted feedback is reviewed before it appears publicly.</p>
+        <div class="message-form-grid">
+            <div class="tf-group">
+                <label>Your Name</label>
+                <input type="text" id="testName" placeholder="Full name">
+            </div>
+            <div class="tf-group">
+                <label>Role / Organization</label>
+                <input type="text" id="testRole" placeholder="e.g. Project Lead, XYZ Ltd.">
+            </div>
+        </div>
+        <div class="tf-group">
+            <label>Your Feedback</label>
+            <textarea id="testMessage" placeholder="Share your experience working with me..." style="min-height:100px;"></textarea>
+        </div>
+        <p class="tf-error" id="testError"></p>
+        <button class="tf-save-btn" id="testSubmitBtn" onclick="submitTestimonial()"><i class="fas fa-paper-plane"></i> Submit Feedback</button>
+    </div>
+</div>
+
+<!-- View All Feedback modal -->
+<div class="modal" id="viewAllFeedbackModal">
+    <div class="modal-content" style="max-width:640px; max-height:80vh; overflow-y:auto;">
+        <span class="close-modal" onclick="closeViewAllFeedback()">&times;</span>
+        <h3 style="margin-bottom:20px;">All Feedback</h3>
+        <div class="testimonial-grid" id="allFeedbackGrid" style="grid-template-columns:1fr;"></div>
+    </div>
+</div>
 
 
 <section id="contact">
@@ -1165,7 +1351,33 @@ details[open] .expand-icon {
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14050.298818564175!2d80.57501726057999!3d28.687481358327477!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39a19326778f921f%3A0x868b8159f8a32a22!2sDhangadhi!5e0!3m2!1sen!2snp!4v1715428000000!5m2!1sen!2snp" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
         </div>
     </div>
+
+    <div class="message-form-wrap">
+        <h3>Send a Message</h3>
+        <p class="section-sub" style="margin-bottom:24px;">Have a project or a collaboration idea? I’d love to hear about it. Send me a message and let's get started!</p>
+        <div class="message-form-grid">
+            <div class="tf-group">
+                <label>Your Name</label>
+                <input type="text" id="msgName" placeholder="Full name">
+            </div>
+            <div class="tf-group">
+                <label>Your Email</label>
+                <input type="email" id="msgEmail" placeholder="you@example.com">
+            </div>
+        </div>
+        <div class="tf-group">
+            <label>Subject</label>
+            <input type="text" id="msgSubject" placeholder="What is this about?">
+        </div>
+        <div class="tf-group">
+            <label>Message</label>
+            <textarea id="msgBody" placeholder="Tell me a bit about the project or query..." style="min-height:120px;"></textarea>
+        </div>
+        <p class="tf-error" id="msgError"></p>
+        <button class="tf-save-btn" id="msgSendBtn" onclick="sendContactMessage()"><i class="fas fa-paper-plane"></i> Send Message</button>
+    </div>
 </section>
+
 
 <footer>
     <p>© <span id="current-year"></span> Saroj Chaudhary <span class="mono">Geomatics Student</span>. All Rights Reserved.</p>
@@ -1240,6 +1452,21 @@ details[open] .expand-icon {
         <div class="tf-group">
             <label>Title</label>
             <input type="text" id="tfTitle" placeholder="e.g. Solukhumbu, Nepal">
+        </div>
+        <div class="message-form-grid" style="margin-bottom:16px;">
+            <div class="tf-group" style="margin-bottom:0;">
+                <label>Date visited (optional)</label>
+                <input type="date" id="tfDate">
+            </div>
+            <div class="tf-group" style="margin-bottom:0;">
+                <label>Category</label>
+                <select id="tfCategory">
+                    <option value="trekking">Trekking</option>
+                    <option value="survey">Survey / Field Work</option>
+                    <option value="vacation">Vacation</option>
+                    <option value="personal">Personal</option>
+                </select>
+            </div>
         </div>
         <div class="tf-group">
             <label>Short Description</label>
@@ -1503,6 +1730,7 @@ function togglePassword() {
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <script>
 /* =========================================================================
@@ -1534,14 +1762,38 @@ try {
     console.warn("Firebase not configured yet:", e.message);
 }
 
-/* ---------------- CUSTOM MAP PIN ICON (Font Awesome) ---------------- */
-const customPinIcon = L.divIcon({
-    className: 'custom-map-pin',
-    html: `<i class="fas fa-map-pin" style="color: #0088cc; font-size: 38px; text-shadow: 0 2px 8px rgba(0,0,0,0.3); filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));"></i>`,
-    iconSize: [38, 38],
-    iconAnchor: [19, 38],
-    popupAnchor: [0, -38]
-});
+/* ---------------- EmailJS (contact form) ---------------- */
+const EMAILJS_PUBLIC_KEY = "JAyTdZRGCIFZxZDdB";
+const EMAILJS_SERVICE_ID = "service_4b16ayg";
+const EMAILJS_TEMPLATE_ID = "template_neg6zcj";
+try {
+    if (window.emailjs) emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+} catch (e) {
+    console.warn("EmailJS not configured yet:", e.message);
+}
+
+/* ---------------- CUSTOM MAP PIN ICONS (Font Awesome, color-coded by category) ---------------- */
+const categoryColors = {
+    trekking: '#0088cc',
+    survey: '#e0930f',
+    vacation: '#2e9e6b',
+    personal: '#8e5fd1'
+};
+const categoryIconCache = {};
+function getCategoryIcon(category){
+    const color = categoryColors[category] || categoryColors.trekking;
+    if(categoryIconCache[category]) return categoryIconCache[category];
+    const icon = L.divIcon({
+        className: 'custom-map-pin',
+        html: `<i class="fas fa-map-pin" style="color: ${color}; font-size: 38px; text-shadow: 0 2px 8px rgba(0,0,0,0.3); filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));"></i>`,
+        iconSize: [38, 38],
+        iconAnchor: [19, 38],
+        popupAnchor: [0, -38]
+    });
+    categoryIconCache[category] = icon;
+    return icon;
+}
+const customPinIcon = getCategoryIcon('trekking');
 
 /* ---------------- Leaflet map + base layers ---------------- */
 let travelMap, currentBaseLayer;
@@ -1567,20 +1819,31 @@ function switchBaseLayer(type){
     document.getElementById('baseOSM').classList.toggle('active', type === 'osm');
     document.getElementById('baseHybrid').classList.toggle('active', type === 'hybrid');
 }
-window.addEventListener('load', initTravelMap);
+window.addEventListener('load', () => {
+    initTravelMap();
+    loadApprovedTestimonials();
+});
 
-/* ---------------- Marker storage ---------------- */
+/* ---------------- Marker storage + category filter + route line ---------------- */
 let travelMarkers = {};
+let allTourPoints = {};
+let activeCategories = new Set(['trekking','survey','vacation','personal']);
+let routeLineVisible = false;
+let routeLineLayer = null;
 
 function renderPointOnMap(id, data){
-    // Use the custom Font Awesome pin icon
-    const marker = L.marker([data.lat, data.lng], { icon: customPinIcon }).addTo(travelMap);
+    const category = data.category || 'trekking';
+    const marker = L.marker([data.lat, data.lng], { icon: getCategoryIcon(category) }).addTo(travelMap);
     const imgsHtml = (data.images && data.images.length)
-        ? `<div class="travel-popup-imgs">${data.images.map(u => `<img src="${u}" onclick='zoomImage(${JSON.stringify(u)}, ${JSON.stringify(JSON.stringify(data.images))})'>`).join('')}</div>`
+        ? `<div class="travel-popup-imgs">${data.images.map(u => `<img src="${u}" loading="lazy" onclick='zoomImage(${JSON.stringify(u)}, ${JSON.stringify(JSON.stringify(data.images))})'>`).join('')}</div>`
         : '';
     const delBtnHtml = isEditMode('delete')
         ? `<button class="travel-popup-del" onclick="deleteTourPoint('${id}')">Delete this point</button>` : '';
-    marker.bindPopup(`<div class="travel-popup"><h4>${escapeHtml(data.title||'')}</h4><p>${escapeHtml(data.desc||'')}</p>${imgsHtml}${delBtnHtml}</div>`);
+    const editBtnHtml = (currentEditor && !isEditMode('delete'))
+        ? `<button class="travel-popup-edit" onclick="openEditTourForm('${id}')"><i class="fas fa-pen"></i> Edit this point</button>` : '';
+    const dateHtml = data.visitDate ? `<p class="travel-popup-date"><i class="fas fa-calendar-day"></i> ${escapeHtml(data.visitDate)}</p>` : '';
+    const catLabel = category.charAt(0).toUpperCase() + category.slice(1);
+    marker.bindPopup(`<div class="travel-popup"><span class="travel-popup-cat" style="background:${categoryColors[category]}">${catLabel}</span><h4>${escapeHtml(data.title||'')}</h4>${dateHtml}<p>${escapeHtml(data.desc||'')}</p>${imgsHtml}${editBtnHtml}${delBtnHtml}</div>`);
     marker.on('click', () => {
         if(deleteModeActive){ deleteTourPoint(id); }
     });
@@ -1588,12 +1851,67 @@ function renderPointOnMap(id, data){
 }
 function escapeHtml(s){ const d = document.createElement('div'); d.innerText = s; return d.innerHTML; }
 
+function renderAllPoints(){
+    Object.values(travelMarkers).forEach(m => travelMap.removeLayer(m));
+    travelMarkers = {};
+    const visibleEntries = Object.entries(allTourPoints).filter(([id, data]) =>
+        activeCategories.has(data.category || 'trekking')
+    );
+    visibleEntries.forEach(([id, data]) => renderPointOnMap(id, data));
+    updateRouteLine(visibleEntries);
+    updateLegendCounts();
+}
+
+function updateLegendCounts(){
+    const counts = { trekking: 0, survey: 0, vacation: 0, personal: 0 };
+    Object.values(allTourPoints).forEach(data => {
+        const cat = data.category || 'trekking';
+        if(counts[cat] !== undefined) counts[cat]++;
+    });
+    document.querySelectorAll('.legend-count').forEach(span => {
+        const cat = span.getAttribute('data-count-for');
+        span.textContent = `(${counts[cat] || 0})`;
+    });
+}
+
+function updateRouteLine(visibleEntries){
+    if(routeLineLayer){ travelMap.removeLayer(routeLineLayer); routeLineLayer = null; }
+    if(!routeLineVisible) return;
+    const sorted = visibleEntries.slice().sort((a, b) => {
+        const da = a[1].visitDate || '';
+        const db = b[1].visitDate || '';
+        if(da && db) return da.localeCompare(db);
+        if(da) return -1;
+        if(db) return 1;
+        return 0;
+    });
+    const latlngs = sorted.map(([id, data]) => [data.lat, data.lng]);
+    if(latlngs.length > 1){
+        routeLineLayer = L.polyline(latlngs, {
+            color: '#003566', weight: 2.5, dashArray: '6,8', opacity: 0.75
+        }).addTo(travelMap);
+    }
+}
+
+function toggleCategoryFilter(cat){
+    if(activeCategories.has(cat)) activeCategories.delete(cat);
+    else activeCategories.add(cat);
+    const chip = document.querySelector(`.legend-chip[data-cat="${cat}"]`);
+    if(chip) chip.classList.toggle('active', activeCategories.has(cat));
+    renderAllPoints();
+}
+function toggleRouteLine(){
+    routeLineVisible = !routeLineVisible;
+    document.getElementById('routeToggleBtn').classList.toggle('active', routeLineVisible);
+    renderAllPoints();
+}
+
 function loadTourPoints(){
     if(!firebaseReady) return;
     travelDB.collection('tourPoints').onSnapshot(snapshot => {
-        Object.values(travelMarkers).forEach(m => travelMap.removeLayer(m));
-        travelMarkers = {};
-        snapshot.forEach(doc => renderPointOnMap(doc.id, doc.data()));
+        allTourPoints = {};
+        snapshot.forEach(doc => { allTourPoints[doc.id] = doc.data(); });
+        renderAllPoints();
     }, err => console.warn('tourPoints listener error:', err.message));
 }
 
@@ -1652,8 +1970,10 @@ if(firebaseReady && travelAuth){
         if(user){
             currentEditor = { email: user.email, displayName: 'Saroj' };
             showTourControlsForEditor();
+            startPendingTestimonialsListener();
         } else {
             currentEditor = null;
+            stopPendingTestimonialsListener();
         }
     });
 }
@@ -1714,19 +2034,58 @@ function updateModeBanner(){
         banner.classList.remove('show');
     }
 }
+let editingPointId = null;
+
 function onMapClickForAdd(e){
     if(!addModeActive || !currentEditor) return;
+    editingPointId = null;
+    setTourFormMode('add');
     pendingLatLng = e.latlng;
     document.getElementById('tfCoordHint').textContent =
         `Location: ${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}`;
     document.getElementById('tfTitle').value = '';
     document.getElementById('tfDesc').value = '';
+    document.getElementById('tfDate').value = '';
+    document.getElementById('tfCategory').value = 'trekking';
     resetImgUrlRows();
     document.getElementById('tfPreview').innerHTML = '';
     document.getElementById('tfError').style.display = 'none';
     document.getElementById('tourFormModal').style.display = 'flex';
 }
-function closeTourForm(){ document.getElementById('tourFormModal').style.display = 'none'; }
+function openEditTourForm(id){
+    const data = allTourPoints[id];
+    if(!data || !currentEditor) return;
+    editingPointId = id;
+    setTourFormMode('edit');
+    pendingLatLng = { lat: data.lat, lng: data.lng };
+    document.getElementById('tfCoordHint').textContent =
+        `Location: ${data.lat.toFixed(5)}, ${data.lng.toFixed(5)} (unchanged)`;
+    document.getElementById('tfTitle').value = data.title || '';
+    document.getElementById('tfDesc').value = data.desc || '';
+    document.getElementById('tfDate').value = data.visitDate || '';
+    document.getElementById('tfCategory').value = data.category || 'trekking';
+    setImgRows(data.images || []);
+    document.getElementById('tfError').style.display = 'none';
+    updateImagePreview();
+    Object.values(travelMarkers).forEach(m => m.closePopup());
+    document.getElementById('tourFormModal').style.display = 'flex';
+}
+function setTourFormMode(mode){
+    const heading = document.querySelector('#tourFormModal h3');
+    const btn = document.getElementById('tfSaveBtn');
+    if(mode === 'edit'){
+        if(heading) heading.textContent = 'Edit Tour Point';
+        if(btn) btn.textContent = 'Update';
+    } else {
+        if(heading) heading.textContent = 'Add New Tour Point';
+        if(btn) btn.textContent = 'Save';
+    }
+}
+function closeTourForm(){
+    document.getElementById('tourFormModal').style.display = 'none';
+    editingPointId = null;
+    setTourFormMode('add');
+}
 
 function updateImagePreview(){
     const preview = document.getElementById('tfPreview');
@@ -1748,14 +2107,23 @@ document.addEventListener('input', (e) => {
     }
 });
 
-function makeImgRow(){
+function makeImgRow(value){
     const row = document.createElement('div');
     row.className = 'tf-img-row';
     row.innerHTML = `
-        <input type="text" class="tfImgUrl" placeholder="https://i.imgur.com/example.jpg">
+        <input type="text" class="tfImgUrl" placeholder="https://i.imgur.com/example.jpg" value="${value ? value.replace(/"/g,'&quot;') : ''}">
         <button type="button" class="tf-img-remove" onclick="removeImgRow(this)" title="Remove"><i class="fas fa-xmark"></i></button>
     `;
     return row;
+}
+function setImgRows(urls){
+    const container = document.getElementById('tfImgUrlsContainer');
+    container.innerHTML = '';
+    if(urls && urls.length){
+        urls.forEach(u => container.appendChild(makeImgRow(u)));
+    } else {
+        container.appendChild(makeImgRow());
+    }
 }
 function addImgRow(){
     const container = document.getElementById('tfImgUrlsContainer');
@@ -1782,6 +2150,8 @@ function resetImgUrlRows(){
 async function saveTourPoint(){
     const title = document.getElementById('tfTitle').value.trim();
     const desc = document.getElementById('tfDesc').value.trim();
+    const visitDate = document.getElementById('tfDate').value || null;
+    const category = document.getElementById('tfCategory').value || 'trekking';
     const imageUrls = Array.from(document.querySelectorAll('.tfImgUrl'))
         .map(input => input.value.trim())
         .filter(url => url.length > 0);
@@ -1793,14 +2163,23 @@ async function saveTourPoint(){
     if(!firebaseReady){ errEl.textContent = 'Backend not configured yet.'; errEl.style.display = 'block'; return; }
     if(!currentEditor){ errEl.textContent = 'You must be logged in to add a point.'; errEl.style.display = 'block'; return; }
 
-    btn.disabled = true; btn.textContent = 'Saving...';
+    const isEditing = !!editingPointId;
+    btn.disabled = true; btn.textContent = isEditing ? 'Updating...' : 'Saving...';
     try {
-        await travelDB.collection('tourPoints').add({
-            title, desc,
-            lat: pendingLatLng.lat, lng: pendingLatLng.lng,
-            images: imageUrls,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
+        if(isEditing){
+            await travelDB.collection('tourPoints').doc(editingPointId).update({
+                title, desc, visitDate, category,
+                lat: pendingLatLng.lat, lng: pendingLatLng.lng,
+                images: imageUrls
+            });
+        } else {
+            await travelDB.collection('tourPoints').add({
+                title, desc, visitDate, category,
+                lat: pendingLatLng.lat, lng: pendingLatLng.lng,
+                images: imageUrls,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+        }
         closeTourForm();
         addModeActive = false;
         document.getElementById('addTourBtn') && document.getElementById('addTourBtn').classList.remove('active');
@@ -1808,7 +2187,7 @@ async function saveTourPoint(){
     } catch(err){
         errEl.textContent = err.message; errEl.style.display = 'block';
     } finally {
-        btn.disabled = false; btn.textContent = 'Save';
+        btn.disabled = false; btn.textContent = isEditing ? 'Update' : 'Save';
     }
 }
 
@@ -1819,6 +2198,235 @@ async function deleteTourPoint(id){
         await travelDB.collection('tourPoints').doc(id).delete();
     } catch(err){ alert('Could not delete: ' + err.message); }
 }
+
+/* ---------------- Testimonials (public feed + submission + admin approval) ---------------- */
+function escapeHtmlText(s){ const d = document.createElement('div'); d.innerText = s || ''; return d.innerHTML; }
+
+let allApprovedTestimonials = [];
+
+function loadApprovedTestimonials(){
+    if(!firebaseReady) return;
+    travelDB.collection('testimonials').where('approved', '==', true).onSnapshot(snapshot => {
+        const items = [];
+        snapshot.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
+        items.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+        allApprovedTestimonials = items;
+        renderTestimonialsGrid(items);
+    }, err => console.warn('testimonials listener error:', err.message));
+}
+
+function buildTestimonialCard(item){
+    return `
+        <div class="testimonial-card">
+            <i class="fas fa-quote-left quote-icon"></i>
+            <p class="testimonial-text">${escapeHtmlText(item.message)}</p>
+            <div class="testimonial-author">
+                <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(item.name || 'Guest')}&background=0088cc&color=fff" alt="${escapeHtmlText(item.name)}" loading="lazy">
+                <div>
+                    <h4>${escapeHtmlText(item.name)}</h4>
+                    <span>${escapeHtmlText(item.role || '')}</span>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function renderTestimonialsGrid(items){
+    const grid = document.getElementById('testimonialsGrid');
+    const viewAllBtn = document.getElementById('viewAllFeedbackBtn');
+    if(!grid) return;
+    if(!items.length){
+        grid.innerHTML = '<p class="testimonial-empty">No feedback yet — be the first to share your experience below!</p>';
+        if(viewAllBtn) viewAllBtn.style.display = 'none';
+        return;
+    }
+    grid.innerHTML = items.slice(0, 3).map(buildTestimonialCard).join('');
+    if(viewAllBtn) viewAllBtn.style.display = items.length > 3 ? 'flex' : 'none';
+}
+
+function openViewAllFeedback(){
+    document.getElementById('allFeedbackGrid').innerHTML = allApprovedTestimonials.map(buildTestimonialCard).join('');
+    document.getElementById('viewAllFeedbackModal').style.display = 'flex';
+}
+function closeViewAllFeedback(){
+    document.getElementById('viewAllFeedbackModal').style.display = 'none';
+}
+
+function openFeedbackForm(){
+    document.getElementById('testError').style.display = 'none';
+    document.getElementById('feedbackFormModal').style.display = 'flex';
+}
+function closeFeedbackForm(){
+    document.getElementById('feedbackFormModal').style.display = 'none';
+}
+
+async function submitTestimonial(){
+    const name = document.getElementById('testName').value.trim();
+    const role = document.getElementById('testRole').value.trim();
+    const message = document.getElementById('testMessage').value.trim();
+    const errEl = document.getElementById('testError');
+    const btn = document.getElementById('testSubmitBtn');
+    errEl.className = 'tf-error';
+    errEl.style.display = 'none';
+
+    if(!name || !message){
+        errEl.textContent = 'Please add your name and feedback message.';
+        errEl.style.display = 'block';
+        return;
+    }
+    if(!firebaseReady){
+        errEl.textContent = 'Feedback service is not available right now.';
+        errEl.style.display = 'block';
+        return;
+    }
+
+    btn.disabled = true;
+    const originalHtml = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+    try {
+        await travelDB.collection('testimonials').add({
+            name, role, message,
+            approved: false,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        errEl.className = 'tf-success';
+        errEl.textContent = 'Thank you! Your feedback has been submitted and is awaiting review.';
+        errEl.style.display = 'block';
+        document.getElementById('testName').value = '';
+        document.getElementById('testRole').value = '';
+        document.getElementById('testMessage').value = '';
+        setTimeout(closeFeedbackForm, 2200);
+    } catch(err){
+        errEl.className = 'tf-error';
+        errEl.textContent = 'Could not submit feedback: ' + err.message;
+        errEl.style.display = 'block';
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = originalHtml;
+    }
+}
+
+/* ---- Admin: approve/reject pending testimonials (only visible when logged in) ---- */
+let pendingTestimonialsUnsub = null;
+
+function startPendingTestimonialsListener(){
+    if(!firebaseReady || !currentEditor || pendingTestimonialsUnsub) return;
+    document.getElementById('testimonialsAdminPanel').style.display = 'block';
+    pendingTestimonialsUnsub = travelDB.collection('testimonials').where('approved', '==', false)
+        .onSnapshot(snapshot => {
+            const items = [];
+            snapshot.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
+            items.sort((a, b) => (a.createdAt?.seconds || 0) - (b.createdAt?.seconds || 0));
+            renderPendingTestimonials(items);
+        }, err => console.warn('pending testimonials listener error:', err.message));
+}
+function stopPendingTestimonialsListener(){
+    if(pendingTestimonialsUnsub){ pendingTestimonialsUnsub(); pendingTestimonialsUnsub = null; }
+    const panel = document.getElementById('testimonialsAdminPanel');
+    if(panel) panel.style.display = 'none';
+}
+function renderPendingTestimonials(items){
+    const list = document.getElementById('testimonialsAdminList');
+    if(!list) return;
+    if(!items.length){
+        list.innerHTML = '<p style="color:var(--ink-soft); font-size:0.85rem;">No pending feedback right now.</p>';
+        return;
+    }
+    list.innerHTML = items.map(item => `
+        <div class="pending-testimonial-card">
+            <h4>${escapeHtmlText(item.name)}</h4>
+            <span>${escapeHtmlText(item.role || '')}</span>
+            <p style="margin-top:8px;">${escapeHtmlText(item.message)}</p>
+            <div class="pending-actions">
+                <button class="pending-approve" onclick="approveTestimonial('${item.id}')"><i class="fas fa-check"></i> Approve</button>
+                <button class="pending-reject" onclick="rejectTestimonial('${item.id}')"><i class="fas fa-xmark"></i> Reject</button>
+            </div>
+        </div>
+    `).join('');
+}
+async function approveTestimonial(id){
+    if(!currentEditor) return;
+    try { await travelDB.collection('testimonials').doc(id).update({ approved: true }); }
+    catch(err){ alert('Could not approve: ' + err.message); }
+}
+async function rejectTestimonial(id){
+    if(!currentEditor) return;
+    if(!confirm('Reject and delete this feedback submission?')) return;
+    try { await travelDB.collection('testimonials').doc(id).delete(); }
+    catch(err){ alert('Could not reject: ' + err.message); }
+}
+
+/* ---------------- Contact message form (sent directly via EmailJS) ---------------- */
+function sendContactMessage(){
+    const name = document.getElementById('msgName').value.trim();
+    const email = document.getElementById('msgEmail').value.trim();
+    const subject = document.getElementById('msgSubject').value.trim();
+    const body = document.getElementById('msgBody').value.trim();
+    const errEl = document.getElementById('msgError');
+    const btn = document.getElementById('msgSendBtn');
+    errEl.style.display = 'none';
+    errEl.className = 'tf-error';
+
+    if(!name || !email || !body){
+        errEl.textContent = 'Please fill in your name, email, and message.';
+        errEl.style.display = 'block';
+        return;
+    }
+    if(!window.emailjs){
+        errEl.textContent = 'Message service is not available right now. Please try again later.';
+        errEl.style.display = 'block';
+        return;
+    }
+
+    btn.disabled = true;
+    const originalLabel = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        from_name: name,
+        from_email: email,
+        subject: subject || `Website message from ${name}`,
+        message: body
+    }).then(() => {
+        errEl.className = 'tf-success';
+        errEl.textContent = 'Message sent! I\'ll get back to you soon.';
+        errEl.style.display = 'block';
+        document.getElementById('msgName').value = '';
+        document.getElementById('msgEmail').value = '';
+        document.getElementById('msgSubject').value = '';
+        document.getElementById('msgBody').value = '';
+    }).catch((err) => {
+        errEl.className = 'tf-error';
+        const detail = (err && (err.text || err.message)) ? ` (${err.text || err.message})` : '';
+        errEl.textContent = 'Could not send message. Please try again in a moment.' + detail;
+        errEl.style.display = 'block';
+        console.warn('EmailJS error:', err);
+    }).finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = originalLabel;
+    });
+}
+
+/* ---------------- Dark mode toggle ---------------- */
+function setThemeIcon(){
+    const icon = document.getElementById('themeToggleIcon');
+    if(!icon) return;
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+}
+function toggleTheme(){
+    const root = document.documentElement;
+    const isDark = root.getAttribute('data-theme') === 'dark';
+    if(isDark){
+        root.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+    } else {
+        root.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+    }
+    setThemeIcon();
+}
+document.addEventListener('DOMContentLoaded', setThemeIcon);
 
 /* ---------------- Search (Nominatim/OSM geocoding) ---------------- */
 let searchDebounce = null;
