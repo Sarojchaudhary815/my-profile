@@ -650,6 +650,14 @@ details[open] .expand-icon {
     cursor:pointer; width:100%; font-weight:600; margin-bottom:6px;
 }
 
+/* pin hover tooltip (location name) */
+.pin-tooltip{
+    background:rgba(0,53,102,0.92); color:#fff; border:none; border-radius:8px;
+    padding:6px 12px; font-family:'Sora',sans-serif; font-size:0.78rem; font-weight:600;
+    box-shadow:0 6px 18px rgba(0,53,102,0.25);
+}
+.pin-tooltip::before{border-top-color:rgba(0,53,102,0.92);}
+
 /* Add-point form modal */
 #tourLoginModal .modal-content{max-width:420px;}
 #tourFormModal .modal-content{
@@ -1259,7 +1267,7 @@ details[open] .expand-icon {
         <!-- bottom-left category filter legend -->
         <div class="travel-legend" id="travelLegend">
             <button class="legend-chip active" data-cat="trekking" onclick="toggleCategoryFilter('trekking')"><span class="dot" style="background:#0088cc"></span> Trekking <span class="legend-count" data-count-for="trekking">(0)</span></button>
-            <button class="legend-chip active" data-cat="vacation" onclick="toggleCategoryFilter('vacation')"><span class="dot" style="background:#2e9e6b"></span> Vacation <span class="legend-count" data-count-for="vacation">(0)</span></button>
+            <button class="legend-chip active" data-cat="hike" onclick="toggleCategoryFilter('hike')"><span class="dot" style="background:#2e9e6b"></span> Hike <span class="legend-count" data-count-for="hike">(0)</span></button>
             <button class="legend-chip active" data-cat="survey" onclick="toggleCategoryFilter('survey')"><span class="dot" style="background:#e0930f"></span> Field Work <span class="legend-count" data-count-for="survey">(0)</span></button>
             <button class="legend-chip active" data-cat="personal" onclick="toggleCategoryFilter('personal')"><span class="dot" style="background:#8e5fd1"></span> Local Visits <span class="legend-count" data-count-for="personal">(0)</span></button>
             <button class="legend-chip route-chip" id="routeToggleBtn" onclick="toggleRouteLine()"><i class="fas fa-route"></i> Show Route</button>
@@ -1468,7 +1476,7 @@ details[open] .expand-icon {
                 <label>Category</label>
                 <select id="tfCategory">
                     <option value="trekking">Trekking</option>
-                    <option value="vacation">Vacation</option>
+                    <option value="hike">Hike</option>
                     <option value="survey">Field Work</option>
                     <option value="personal">Local Visits</option>
                 </select>
@@ -1764,6 +1772,11 @@ try {
     travelDB = firebase.firestore();
     travelAuth = firebase.auth();
     firebaseReady = true;
+    /* Session is NOT persisted across page reloads/tabs — refreshing the
+       page always logs the owner out, so login is required again each time. */
+    travelAuth.setPersistence(firebase.auth.Auth.Persistence.NONE).catch(err => {
+        console.warn('Could not set auth persistence:', err.message);
+    });
 } catch (e) {
     console.warn("Firebase not configured yet:", e.message);
 }
@@ -1781,14 +1794,14 @@ try {
 /* ---------------- CUSTOM MAP PIN ICONS (Font Awesome, color-coded by category) ---------------- */
 const categoryColors = {
     trekking: '#0088cc',
+    hike: '#2e9e6b',
     survey: '#e0930f',
-    vacation: '#2e9e6b',
     personal: '#8e5fd1'
 };
 const categoryLabels = {
     trekking: 'Trekking',
+    hike: 'Hike',
     survey: 'Field Work',
-    vacation: 'Vacation',
     personal: 'Local Visits'
 };
 const categoryIconCache = {};
@@ -1839,13 +1852,19 @@ window.addEventListener('load', () => {
 /* ---------------- Marker storage + category filter + route line ---------------- */
 let travelMarkers = {};
 let allTourPoints = {};
-let activeCategories = new Set(['trekking','survey','vacation','personal']);
+let activeCategories = new Set(['trekking','hike','survey','personal']);
 let routeLineVisible = false;
 let routeLineLayer = null;
 
 function renderPointOnMap(id, data){
     const category = data.category || 'trekking';
     const marker = L.marker([data.lat, data.lng], { icon: getCategoryIcon(category) }).addTo(travelMap);
+    /* Hover tooltip showing the location name */
+    if(data.title){
+        marker.bindTooltip(escapeHtml(data.title), {
+            direction: 'top', offset: [0, -34], className: 'pin-tooltip'
+        });
+    }
     const imgsHtml = (data.images && data.images.length)
         ? `<div class="travel-popup-imgs">${data.images.map(u => `<img src="${u}" loading="lazy" onclick='zoomImage(${JSON.stringify(u)}, ${JSON.stringify(JSON.stringify(data.images))})'>`).join('')}</div>`
         : '';
@@ -1875,7 +1894,7 @@ function renderAllPoints(){
 }
 
 function updateLegendCounts(){
-    const counts = { trekking: 0, survey: 0, vacation: 0, personal: 0 };
+    const counts = { trekking: 0, hike: 0, survey: 0, personal: 0 };
     Object.values(allTourPoints).forEach(data => {
         const cat = data.category || 'trekking';
         if(counts[cat] !== undefined) counts[cat]++;
@@ -1976,7 +1995,8 @@ async function checkLogin(){
 }
 
 /* Keep the login state in sync with Firebase's own session (no more
-   hand-rolled sessionStorage flag holding "is logged in"). */
+   hand-rolled sessionStorage flag holding "is logged in"). Persistence is
+   set to NONE above, so this fires as "logged out" on every fresh page load. */
 if(firebaseReady && travelAuth){
     travelAuth.onAuthStateChanged(user => {
         if(user){
