@@ -1268,9 +1268,9 @@ details[open] .expand-icon {
         <div class="travel-legend" id="travelLegend">
             <button class="legend-chip active" data-cat="trekking" onclick="toggleCategoryFilter('trekking')"><span class="dot" style="background:#0088cc"></span> Trekking <span class="legend-count" data-count-for="trekking">(0)</span></button>
             <button class="legend-chip active" data-cat="hike" onclick="toggleCategoryFilter('hike')"><span class="dot" style="background:#2e9e6b"></span> Hike <span class="legend-count" data-count-for="hike">(0)</span></button>
+            <button class="legend-chip active" data-cat="vacation" onclick="toggleCategoryFilter('vacation')"><span class="dot" style="background:#f56105"></span> Vacation <span class="legend-count" data-count-for="vacation">(0)</span></button>
             <button class="legend-chip active" data-cat="survey" onclick="toggleCategoryFilter('survey')"><span class="dot" style="background:#e0930f"></span> Field Work <span class="legend-count" data-count-for="survey">(0)</span></button>
             <button class="legend-chip active" data-cat="personal" onclick="toggleCategoryFilter('personal')"><span class="dot" style="background:#8e5fd1"></span> Local Visits <span class="legend-count" data-count-for="personal">(0)</span></button>
-            <button class="legend-chip route-chip" id="routeToggleBtn" onclick="toggleRouteLine()"><i class="fas fa-route"></i> Show Route</button>
         </div>
     </div>
 </section>
@@ -1368,7 +1368,7 @@ details[open] .expand-icon {
 
     <div class="message-form-wrap">
         <h3>Send a Message</h3>
-        <p class="section-sub" style="margin-bottom:24px;">Have a project or a collaboration idea? I’d love to hear about it. Send me a message and let's get started!</p>
+        <p class="section-sub" style="margin-bottom:24px;">Have a project or a collaboration idea? I'd love to hear about it. Send me a message and let's get started!</p>
         <div class="message-form-grid">
             <div class="tf-group">
                 <label>Your Name</label>
@@ -1477,6 +1477,7 @@ details[open] .expand-icon {
                 <select id="tfCategory">
                     <option value="trekking">Trekking</option>
                     <option value="hike">Hike</option>
+                    <option value="vacation">Vacation</option>
                     <option value="survey">Field Work</option>
                     <option value="personal">Local Visits</option>
                 </select>
@@ -1795,12 +1796,14 @@ try {
 const categoryColors = {
     trekking: '#0088cc',
     hike: '#2e9e6b',
+    vacation: '#d1495b',
     survey: '#e0930f',
     personal: '#8e5fd1'
 };
 const categoryLabels = {
     trekking: 'Trekking',
     hike: 'Hike',
+    vacation: 'Vacation',
     survey: 'Field Work',
     personal: 'Local Visits'
 };
@@ -1849,12 +1852,10 @@ window.addEventListener('load', () => {
     loadApprovedTestimonials();
 });
 
-/* ---------------- Marker storage + category filter + route line ---------------- */
+/* ---------------- Marker storage + category filter ---------------- */
 let travelMarkers = {};
 let allTourPoints = {};
-let activeCategories = new Set(['trekking','hike','survey','personal']);
-let routeLineVisible = false;
-let routeLineLayer = null;
+let activeCategories = new Set(['trekking','hike','vacation','survey','personal']);
 
 function renderPointOnMap(id, data){
     const category = data.category || 'trekking';
@@ -1889,12 +1890,11 @@ function renderAllPoints(){
         activeCategories.has(data.category || 'trekking')
     );
     visibleEntries.forEach(([id, data]) => renderPointOnMap(id, data));
-    updateRouteLine(visibleEntries);
     updateLegendCounts();
 }
 
 function updateLegendCounts(){
-    const counts = { trekking: 0, hike: 0, survey: 0, personal: 0 };
+    const counts = { trekking: 0, hike: 0, vacation: 0, survey: 0, personal: 0 };
     Object.values(allTourPoints).forEach(data => {
         const cat = data.category || 'trekking';
         if(counts[cat] !== undefined) counts[cat]++;
@@ -1905,35 +1905,11 @@ function updateLegendCounts(){
     });
 }
 
-function updateRouteLine(visibleEntries){
-    if(routeLineLayer){ travelMap.removeLayer(routeLineLayer); routeLineLayer = null; }
-    if(!routeLineVisible) return;
-    const sorted = visibleEntries.slice().sort((a, b) => {
-        const da = a[1].visitDate || '';
-        const db = b[1].visitDate || '';
-        if(da && db) return da.localeCompare(db);
-        if(da) return -1;
-        if(db) return 1;
-        return 0;
-    });
-    const latlngs = sorted.map(([id, data]) => [data.lat, data.lng]);
-    if(latlngs.length > 1){
-        routeLineLayer = L.polyline(latlngs, {
-            color: '#003566', weight: 2.5, dashArray: '6,8', opacity: 0.75
-        }).addTo(travelMap);
-    }
-}
-
 function toggleCategoryFilter(cat){
     if(activeCategories.has(cat)) activeCategories.delete(cat);
     else activeCategories.add(cat);
     const chip = document.querySelector(`.legend-chip[data-cat="${cat}"]`);
     if(chip) chip.classList.toggle('active', activeCategories.has(cat));
-    renderAllPoints();
-}
-function toggleRouteLine(){
-    routeLineVisible = !routeLineVisible;
-    document.getElementById('routeToggleBtn').classList.toggle('active', routeLineVisible);
     renderAllPoints();
 }
 
